@@ -180,7 +180,14 @@ paths:
                 Deck Response:
                   $ref: "#/components/examples/DeckResponseExample"
         "401":
-          description: Unauthorized access
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
     get:
       tags:
@@ -202,7 +209,14 @@ paths:
                 Deck List Response:
                   $ref: "#/components/examples/DeckListResponseExample"
         "401":
-          description: Unauthorized access
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks/{deckId}:
     get:
@@ -230,9 +244,14 @@ paths:
                 Deck Response:
                   $ref: "#/components/examples/DeckResponseExample"
         "401":
-          description: Unauthorized access
-        "404":
-          description: Deck not found
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
     put:
       tags:
@@ -268,9 +287,14 @@ paths:
                 Deck Response:
                   $ref: "#/components/examples/DeckResponseExample"
         "401":
-          description: Unauthorized access
-        "404":
-          description: Deck not found
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
     delete:
       tags:
@@ -290,9 +314,14 @@ paths:
         "204":
           description: Successfully deleted the deck
         "401":
-          description: Unauthorized access
-        "404":
-          description: Deck not found
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks/{deckId}/questions:
     post:
@@ -328,6 +357,15 @@ paths:
               examples:
                 Question Response:
                   $ref: "#/components/examples/QuestionResponseExample"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
     get:
       tags:
@@ -355,6 +393,15 @@ paths:
               examples:
                 Question List Response:
                   $ref: "#/components/examples/QuestionListResponseExample"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks/{deckId}/questions/{questionId}:
     get:
@@ -388,9 +435,14 @@ paths:
                 Question Response:
                   $ref: "#/components/examples/QuestionResponseExample"
         "401":
-          description: Unauthorized access
-        "404":
-          description: Question not found
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
     put:
       tags:
@@ -432,9 +484,14 @@ paths:
                 Question Response:
                   $ref: "#/components/examples/QuestionResponseExample"
         "401":
-          description: Unauthorized access
-        "404":
-          description: Question not found
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
     delete:
       tags:
@@ -460,9 +517,14 @@ paths:
         "204":
           description: Successfully deleted the question
         "401":
-          description: Unauthorized access
-        "404":
-          description: Question not found
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks/{deckId}/gameSessions/start:
     post:
@@ -492,9 +554,14 @@ paths:
                 Question List Response:
                   $ref: "#/components/examples/QuestionListResponseExample"
         "401":
-          description: Unauthorized access
-        "404":
-          description: Deck not found
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks/{deckId}/gameSessions/end:
     post:
@@ -533,9 +600,14 @@ paths:
                 Game Session Result:
                   $ref: "#/components/examples/GameSessionResponseExample"
         "401":
-          description: Unauthorized access
-        "404":
-          description: Deck not found
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks/{deckId}/gameSessions:
     get:
@@ -565,9 +637,14 @@ paths:
                 Game Session Result List:
                   $ref: "#/components/examples/GameSessionResponseListExample"
         "401":
-          description: Unauthorized access
-        "404":
-          description: Deck not found
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks/{deckId}/gameSessions/{gameSessionId}:
     get:
@@ -601,9 +678,14 @@ paths:
                 Game Session Result:
                   $ref: "#/components/examples/GameSessionResponseExample"
         "401":
-          description: Unauthorized access
-        "404":
-          description: Game session not found
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /friends:
     get:
@@ -625,6 +707,15 @@ paths:
               examples:
                 Friend List Response:
                   $ref: "#/components/examples/FriendListResponseExample"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /friends/{friendId}:
     get:
@@ -650,6 +741,15 @@ paths:
               examples:
                 Friend Response:
                   $ref: "#/components/examples/FriendResponseExample"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
     delete:
       tags:
@@ -668,9 +768,14 @@ paths:
         "204":
           description: Successfully removed friend
         "401":
-          description: Unauthorized access
-        "404":
-          description: Friend not found
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /friends/invite:
     post:
@@ -689,6 +794,15 @@ paths:
       responses:
         "200":
           description: Invitation sent
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /friends/invitations/received:
     get:
@@ -707,6 +821,15 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/FriendInvitationResponse"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /friends/invitations/sent:
     get:
@@ -726,7 +849,14 @@ paths:
                 items:
                   $ref: "#/components/schemas/FriendInvitationResponse"
         "401":
-          description: Unauthorized access
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /friends/invitations/{invitationId}:
     put:
@@ -753,9 +883,14 @@ paths:
         "200":
           description: Successfully responded to invitation
         "401":
-          description: Unauthorized access
-        "404":
-          description: Invitation not found
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
 components:
   securitySchemes:
