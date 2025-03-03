@@ -3,6 +3,9 @@ info:
   title: FlashDash API
   description: FlashDash is an application for learning through quizzes with gamification elements.
   version: 1.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
 
 servers:
   - url: http://localhost:8080
