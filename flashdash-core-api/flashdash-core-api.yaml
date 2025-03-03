@@ -50,8 +50,15 @@ paths:
               examples:
                 Authentication Response:
                   $ref: "#/components/examples/AuthenticationResponseExample"
-        "400":
-          description: Invalid registration data
+        "409":
+          description: Conflict - Email already registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample409_EmailAlreadyRegistered"
 
   /auth/login:
     post:
@@ -81,7 +88,32 @@ paths:
                 Authentication Response:
                   $ref: "#/components/examples/AuthenticationResponseExample"
         "401":
-          description: Invalid credentials
+          description: Unauthorized - Invalid password
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample401_InvalidPassword"
+        "403":
+          description: Forbidden - Account not activated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample403_AccountNotActivated"
+        "404":
+          description: Not Found - User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample404_UserNotFound"
 
   /auth/activate:
     get:
@@ -102,7 +134,23 @@ paths:
         "200":
           description: Successfully activated
         "400":
-          description: Invalid or expired activation token
+          description: Bad Request - Account Already Activated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample400_AccountAlreadyActivated"
+        "404":
+          description: Not Found - User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/ErrorResponseExample404_UserNotFound"
 
   /decks:
     post:
