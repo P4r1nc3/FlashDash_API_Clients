@@ -51,13 +51,13 @@ paths:
                 Authentication Response:
                   $ref: "#/components/examples/AuthenticationResponseExample"
         "409":
-          description: Conflict - Email already registered
+          description: Conflict - Email Already Registered
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Email Already Registered:
                   $ref: "#/components/examples/ErrorResponseExample409_EmailAlreadyRegistered"
 
   /auth/login:
@@ -88,31 +88,31 @@ paths:
                 Authentication Response:
                   $ref: "#/components/examples/AuthenticationResponseExample"
         "401":
-          description: Unauthorized - Invalid password
+          description: Unauthorized - Invalid Password
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Invalid Password:
                   $ref: "#/components/examples/ErrorResponseExample401_InvalidPassword"
         "403":
-          description: Forbidden - Account not activated
+          description: Forbidden - Account Not Activated
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Account Not Activated:
                   $ref: "#/components/examples/ErrorResponseExample403_AccountNotActivated"
         "404":
-          description: Not Found - User not found
+          description: Not Found - User Not Found
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                User Not Found:
                   $ref: "#/components/examples/ErrorResponseExample404_UserNotFound"
 
   /auth/activate:
@@ -140,16 +140,16 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Account Already Activated:
                   $ref: "#/components/examples/ErrorResponseExample400_AccountAlreadyActivated"
         "404":
-          description: Not Found - User not found
+          description: Not Found - User Not Found
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                User Not Found:
                   $ref: "#/components/examples/ErrorResponseExample404_UserNotFound"
 
   /decks:
@@ -186,7 +186,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
     get:
@@ -215,7 +215,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks/{deckId}:
@@ -250,8 +250,17 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Deck Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Deck Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_DeckNotFound"
 
     put:
       tags:
@@ -293,7 +302,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
     delete:
@@ -320,7 +329,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks/{deckId}/questions:
@@ -364,7 +373,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
     get:
@@ -400,7 +409,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks/{deckId}/questions/{questionId}:
@@ -441,7 +450,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
     put:
@@ -490,7 +499,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
     delete:
@@ -523,7 +532,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks/{deckId}/gameSessions/start:
@@ -560,7 +569,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks/{deckId}/gameSessions/end:
@@ -606,7 +615,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks/{deckId}/gameSessions:
@@ -643,7 +652,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks/{deckId}/gameSessions/{gameSessionId}:
@@ -684,7 +693,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /friends:
@@ -714,7 +723,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /friends/{friendId}:
@@ -748,7 +757,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
     delete:
@@ -774,7 +783,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /friends/invite:
@@ -801,7 +810,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /friends/invitations/received:
@@ -828,7 +837,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /friends/invitations/sent:
@@ -855,7 +864,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /friends/invitations/{invitationId}:
@@ -889,7 +898,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Authentication Response:
+                Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
 components:
