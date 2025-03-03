@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: FlashDash API
+  title: FlashDash API v1
   description: FlashDash is an application for learning through quizzes with gamification elements.
   version: 1.0.1
   license:
