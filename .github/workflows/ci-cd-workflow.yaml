@@ -101,17 +101,17 @@ jobs:
           server-id: github
           settings-path: ${{ github.workspace }}
 
-      - name: Configure GitHub Packages Authentication
+      - name: Set up GitHub Packages authentication
         run: |
           mkdir -p ~/.m2
           echo "<settings>
-            <servers>
-              <server>
-                <id>github</id>
-                <username>${{ github.actor }}</username>
-                <password>${{ secrets.TOKEN_GITHUB }}</password>
-              </server>
-            </servers>
+          <servers>
+            <server>
+              <id>github</id>
+              <username>${{ secrets.GITHUB_ACTOR }}</username>
+              <password>${{ secrets.GITHUB_TOKEN }}</password>
+            </server>
+          </servers>
           </settings>" > ~/.m2/settings.xml
 
       - name: Increment version for FlashDash Core API
