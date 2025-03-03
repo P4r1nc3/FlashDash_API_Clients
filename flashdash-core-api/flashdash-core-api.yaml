@@ -304,6 +304,15 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Deck Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Deck Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_DeckNotFound"
 
     delete:
       tags:
@@ -331,6 +340,15 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Deck Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Deck Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_DeckNotFound"
 
   /decks/{deckId}/questions:
     post:
@@ -375,6 +393,15 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Deck Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Deck Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_DeckNotFound"
 
     get:
       tags:
@@ -411,6 +438,15 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Deck Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Deck Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_DeckNotFound"
 
   /decks/{deckId}/questions/{questionId}:
     get:
@@ -452,6 +488,17 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Question Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Deck Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_DeckNotFound"
+                Question Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_QuestionNotFound"
 
     put:
       tags:
@@ -501,6 +548,17 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Question Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Deck Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_DeckNotFound"
+                Question Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_QuestionNotFound"
 
     delete:
       tags:
@@ -534,6 +592,17 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Question Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Deck Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_DeckNotFound"
+                Question Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_QuestionNotFound"
 
   /decks/{deckId}/gameSessions/start:
     post:
@@ -571,6 +640,15 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Deck Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Deck Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_DeckNotFound"
 
   /decks/{deckId}/gameSessions/end:
     post:
@@ -617,6 +695,15 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Deck Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Deck Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_DeckNotFound"
 
   /decks/{deckId}/gameSessions:
     get:
@@ -654,6 +741,15 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Deck Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Deck Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_DeckNotFound"
 
   /decks/{deckId}/gameSessions/{gameSessionId}:
     get:
@@ -695,6 +791,15 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Deck Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Deck Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_DeckNotFound"
 
   /friends:
     get:
@@ -759,6 +864,15 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Friend Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Friend Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_FriendNotFound"
 
     delete:
       tags:
@@ -785,6 +899,15 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Friend Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Friend Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_FriendNotFound"
 
   /friends/invite:
     post:
@@ -900,6 +1023,15 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Friend Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Friend Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_InvitationNotFound"
 
 components:
   securitySchemes:
