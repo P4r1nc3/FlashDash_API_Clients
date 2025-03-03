@@ -1,0 +1,1328 @@
+openapi: 3.0.3
+info:
+  title: FlashDash API
+  description: FlashDash is an application for learning through quizzes with gamification elements.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+tags:
+  - name: Auth
+    description: Authentication endpoints
+  - name: Decks
+    description: Deck management endpoints
+  - name: Questions
+    description: Question management endpoints
+  - name: Game Sessions
+    description: Game session management endpoints
+  - name: Friends
+    description: Friend management endpoints
+  - name: Friend Invitations
+    description: Friend invitation management endpoints
+
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register a new user
+      description: Allows a new user to create an account.
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "200":
+          description: Successfully registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthenticationResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/AuthenticationResponseExample"
+        "400":
+          description: Invalid registration data
+
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Authenticate a user
+      description: Allows a user to log in and receive an authentication token.
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+            examples:
+              Login Request:
+                $ref: "#/components/examples/LoginRequestExample"
+      responses:
+        "200":
+          description: Successfully authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthenticationResponse"
+              examples:
+                Authentication Response:
+                  $ref: "#/components/examples/AuthenticationResponseExample"
+        "401":
+          description: Invalid credentials
+
+  /auth/activate:
+    get:
+      tags:
+        - Auth
+      summary: Activate a user account
+      description: Activates a user account using the provided token.
+      operationId: activateAccount
+      parameters:
+        - name: token
+          in: query
+          required: true
+          description: Activation token received via email
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully activated
+        "400":
+          description: Invalid or expired activation token
+
+  /decks:
+    post:
+      tags:
+        - Decks
+      summary: Create a new deck
+      security:
+        - bearerAuth: []
+      operationId: createDeck
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeckRequest"
+            examples:
+              Deck Request:
+                $ref: "#/components/examples/DeckRequestExample"
+      responses:
+        "200":
+          description: Successfully created a deck
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeckResponse"
+              examples:
+                Deck Response:
+                  $ref: "#/components/examples/DeckResponseExample"
+        "401":
+          description: Unauthorized access
+
+    get:
+      tags:
+        - Decks
+      summary: Get all decks for the authenticated user
+      security:
+        - bearerAuth: []
+      operationId: getAllDecks
+      responses:
+        "200":
+          description: List of decks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DeckResponse"
+              examples:
+                Deck List Response:
+                  $ref: "#/components/examples/DeckListResponseExample"
+        "401":
+          description: Unauthorized access
+
+  /decks/{deckId}:
+    get:
+      tags:
+        - Decks
+      summary: Get a specific deck by ID
+      security:
+        - bearerAuth: []
+      operationId: getDeckById
+      parameters:
+        - name: deckId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Retrieved deck details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeckResponse"
+              examples:
+                Deck Response:
+                  $ref: "#/components/examples/DeckResponseExample"
+        "401":
+          description: Unauthorized access
+        "404":
+          description: Deck not found
+
+    put:
+      tags:
+        - Decks
+      summary: Update a deck
+      security:
+        - bearerAuth: []
+      operationId: updateDeck
+      parameters:
+        - name: deckId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeckRequest"
+            examples:
+              Deck Request:
+                $ref: "#/components/examples/DeckRequestExample"
+      responses:
+        "200":
+          description: Successfully updated the deck
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeckResponse"
+              examples:
+                Deck Response:
+                  $ref: "#/components/examples/DeckResponseExample"
+        "401":
+          description: Unauthorized access
+        "404":
+          description: Deck not found
+
+    delete:
+      tags:
+        - Decks
+      summary: Delete a deck
+      security:
+        - bearerAuth: []
+      operationId: deleteDeck
+      parameters:
+        - name: deckId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "204":
+          description: Successfully deleted the deck
+        "401":
+          description: Unauthorized access
+        "404":
+          description: Deck not found
+
+  /decks/{deckId}/questions:
+    post:
+      tags:
+        - Questions
+      summary: Add a question to a deck
+      security:
+        - bearerAuth: []
+      operationId: addQuestion
+      parameters:
+        - name: deckId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuestionRequest"
+            examples:
+              Question Request:
+                $ref: "#/components/examples/QuestionRequestExample"
+      responses:
+        "200":
+          description: Question added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuestionResponse"
+              examples:
+                Question Response:
+                  $ref: "#/components/examples/QuestionResponseExample"
+
+    get:
+      tags:
+        - Questions
+      summary: Get all questions in a deck
+      security:
+        - bearerAuth: []
+      operationId: getAllQuestions
+      parameters:
+        - name: deckId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: List of questions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/QuestionResponse"
+              examples:
+                Question List Response:
+                  $ref: "#/components/examples/QuestionListResponseExample"
+
+  /decks/{deckId}/questions/{questionId}:
+    get:
+      tags:
+        - Questions
+      summary: Get a specific question by ID within a deck
+      security:
+        - bearerAuth: []
+      operationId: getQuestionById
+      parameters:
+        - name: deckId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: questionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Retrieved question details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuestionResponse"
+              examples:
+                Question Response:
+                  $ref: "#/components/examples/QuestionResponseExample"
+        "401":
+          description: Unauthorized access
+        "404":
+          description: Question not found
+
+    put:
+      tags:
+        - Questions
+      summary: Update a question in a deck
+      security:
+        - bearerAuth: []
+      operationId: updateQuestion
+      parameters:
+        - name: deckId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: questionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuestionRequest"
+            examples:
+              Question Request:
+                $ref: "#/components/examples/QuestionRequestExample"
+      responses:
+        "200":
+          description: Successfully updated the question
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuestionResponse"
+              examples:
+                Question Response:
+                  $ref: "#/components/examples/QuestionResponseExample"
+        "401":
+          description: Unauthorized access
+        "404":
+          description: Question not found
+
+    delete:
+      tags:
+        - Questions
+      summary: Delete a question from a deck
+      security:
+        - bearerAuth: []
+      operationId: deleteQuestion
+      parameters:
+        - name: deckId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: questionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "204":
+          description: Successfully deleted the question
+        "401":
+          description: Unauthorized access
+        "404":
+          description: Question not found
+
+  /decks/{deckId}/gameSessions/start:
+    post:
+      tags:
+        - Game Sessions
+      summary: Start a game session for a specific deck
+      security:
+        - bearerAuth: []
+      operationId: startGameSession
+      parameters:
+        - name: deckId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Game session started, returning questions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/QuestionResponse"
+              examples:
+                Question List Response:
+                  $ref: "#/components/examples/QuestionListResponseExample"
+        "401":
+          description: Unauthorized access
+        "404":
+          description: Deck not found
+
+  /decks/{deckId}/gameSessions/end:
+    post:
+      tags:
+        - Game Sessions
+      summary: End a game session and submit answers
+      security:
+        - bearerAuth: []
+      operationId: endGameSession
+      parameters:
+        - name: deckId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/QuestionRequest"
+            examples:
+              Question List Request:
+                $ref: "#/components/examples/QuestionListRequestExample"
+      responses:
+        "200":
+          description: Game session ended, returning results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GameSessionResponse"
+              examples:
+                Game Session Result:
+                  $ref: "#/components/examples/GameSessionResponseExample"
+        "401":
+          description: Unauthorized access
+        "404":
+          description: Deck not found
+
+  /decks/{deckId}/gameSessions:
+    get:
+      tags:
+        - Game Sessions
+      summary: Get all game sessions for a specific deck
+      security:
+        - bearerAuth: []
+      operationId: getAllGameSessions
+      parameters:
+        - name: deckId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: List of game sessions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameSessionResponse"
+              examples:
+                Game Session Result List:
+                  $ref: "#/components/examples/GameSessionResponseListExample"
+        "401":
+          description: Unauthorized access
+        "404":
+          description: Deck not found
+
+  /decks/{deckId}/gameSessions/{gameSessionId}:
+    get:
+      tags:
+        - Game Sessions
+      summary: Get details of a specific game session
+      security:
+        - bearerAuth: []
+      operationId: getGameSessionById
+      parameters:
+        - name: deckId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: gameSessionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Game session details retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GameSessionResponse"
+              examples:
+                Game Session Result:
+                  $ref: "#/components/examples/GameSessionResponseExample"
+        "401":
+          description: Unauthorized access
+        "404":
+          description: Game session not found
+
+  /friends:
+    get:
+      tags:
+        - Friends
+      summary: Get the list of friends
+      security:
+        - bearerAuth: []
+      operationId: getFriends
+      responses:
+        "200":
+          description: List of friends
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FriendResponse"
+              examples:
+                Friend List Response:
+                  $ref: "#/components/examples/FriendListResponseExample"
+
+  /friends/{friendId}:
+    get:
+      tags:
+        - Friends
+      summary: Get the friend details
+      security:
+        - bearerAuth: []
+      operationId: getFriend
+      parameters:
+        - name: friendId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Friend details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FriendResponse"
+              examples:
+                Friend Response:
+                  $ref: "#/components/examples/FriendResponseExample"
+
+    delete:
+      tags:
+        - Friends
+      summary: Remove a friend
+      security:
+        - bearerAuth: []
+      operationId: deleteFriend
+      parameters:
+        - name: friendId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Successfully removed friend
+        "401":
+          description: Unauthorized access
+        "404":
+          description: Friend not found
+
+  /friends/invite:
+    post:
+      tags:
+        - Friend Invitations
+      summary: Send a friend invitation
+      security:
+        - bearerAuth: []
+      operationId: sendFriendInvitation
+      parameters:
+        - name: recipientEmail
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Invitation sent
+
+  /friends/invitations/received:
+    get:
+      tags:
+        - Friend Invitations
+      summary: Get received friend invitations
+      security:
+        - bearerAuth: []
+      operationId: getReceivedInvitations
+      responses:
+        "200":
+          description: List of received invitations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FriendInvitationResponse"
+
+  /friends/invitations/sent:
+    get:
+      tags:
+        - Friend Invitations
+      summary: Get sent friend invitations
+      security:
+        - bearerAuth: []
+      operationId: getSentInvitations
+      responses:
+        "200":
+          description: List of sent invitations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FriendInvitationResponse"
+        "401":
+          description: Unauthorized access
+
+  /friends/invitations/{invitationId}:
+    put:
+      tags:
+        - Friend Invitations
+      summary: Respond to a friend invitation
+      security:
+        - bearerAuth: []
+      operationId: respondToInvitation
+      parameters:
+        - name: invitationId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [PENDING, ACCEPTED, REJECTED]
+      responses:
+        "200":
+          description: Successfully responded to invitation
+        "401":
+          description: Unauthorized access
+        "404":
+          description: Invitation not found
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "Authentication scheme using Bearer token with JWT."
+
+  schemas:
+    LoginRequest:
+      type: object
+      description: "Request payload for user login."
+      properties:
+        email:
+          type: string
+          format: email
+          description: "User's email address."
+        password:
+          type: string
+          format: password
+          description: "User's password."
+
+    RegisterRequest:
+      type: object
+      description: "Request payload for user registration."
+      properties:
+        email:
+          type: string
+          format: email
+          description: "User's email address."
+        password:
+          type: string
+          format: password
+          description: "User's password."
+        username:
+          type: string
+          description: "Chosen username for the user."
+        firstName:
+          type: string
+          description: "User's first name."
+        lastName:
+          type: string
+          description: "User's last name."
+
+    AuthenticationResponse:
+      type: object
+      description: "Response payload containing authentication token."
+      properties:
+        token:
+          type: string
+          description: "JWT authentication token."
+
+    DeckRequest:
+      type: object
+      description: "Request payload for creating a new deck."
+      properties:
+        name:
+          type: string
+          description: "Name of the deck."
+        description:
+          type: string
+          description: "Brief description of the deck."
+
+    DeckResponse:
+      type: object
+      description: "Response payload for a deck."
+      properties:
+        deckId:
+          type: integer
+          format: int64
+          description: "Unique identifier of the deck."
+        name:
+          type: string
+          description: "Name of the deck."
+        description:
+          type: string
+          description: "Brief description of the deck."
+        createdAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the deck was created."
+        updatedAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the deck was last updated."
+
+    QuestionRequest:
+      type: object
+      description: "Request payload for adding a question to a deck."
+      properties:
+        question:
+          type: string
+          description: "The text of the question."
+        correctAnswers:
+          type: array
+          items:
+            type: string
+          description: "List of correct answers."
+        incorrectAnswers:
+          type: array
+          items:
+            type: string
+          description: "List of incorrect answers."
+        difficulty:
+          type: string
+          enum: [easy, medium, hard]
+          description: "Difficulty level of the question."
+
+    QuestionResponse:
+      type: object
+      description: "Response payload for a question."
+      properties:
+        questionId:
+          type: integer
+          format: int64
+          description: "Unique identifier of the question."
+        question:
+          type: string
+          description: "The text of the question."
+        correctAnswers:
+          type: array
+          items:
+            type: string
+          description: "List of correct answers."
+        incorrectAnswers:
+          type: array
+          items:
+            type: string
+          description: "List of incorrect answers."
+        difficulty:
+          type: string
+          enum: [easy, medium, hard]
+          description: "Difficulty level of the question."
+        createdAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the question was created."
+        updatedAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the question was last updated."
+
+    GameSessionResponse:
+      type: object
+      description: "Summary of a completed game session."
+      properties:
+        score:
+          type: integer
+          description: "Final score achieved in the game session."
+        correctAnswers:
+          type: integer
+          description: "Number of correctly answered questions."
+        totalQuestions:
+          type: integer
+          description: "Total number of questions in the session."
+        duration:
+          type: string
+          format: duration
+          description: "Time taken to complete the session."
+        accuracy:
+          type: number
+          format: float
+          description: "Percentage of correct answers."
+        startTime:
+          type: string
+          format: date-time
+          description: "Timestamp when the session started."
+        endTime:
+          type: string
+          format: date-time
+          description: "Timestamp when the session ended."
+        userPerformance:
+          type: array
+          description: "Detailed breakdown of the user's performance."
+          items:
+            type: object
+            properties:
+              questionId:
+                type: integer
+                description: "ID of the question."
+              wasCorrect:
+                type: boolean
+                description: "Indicates whether the user answered correctly."
+              userAnswer:
+                type: string
+                description: "The answer given by the user."
+
+    UserResponse:
+      type: object
+      description: "Response payload for user details."
+      properties:
+        userId:
+          type: integer
+          description: "Unique identifier of the user."
+        email:
+          type: string
+          format: email
+          description: "User's email address."
+        username:
+          type: string
+          description: "User's username."
+        firstName:
+          type: string
+          description: "User's first name."
+        lastName:
+          type: string
+          description: "User's last name."
+        createdAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the user account was created."
+        updatedAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the user account was last updated."
+        dailyNotifications:
+          type: integer
+          description: "Number of daily notifications received by the user."
+        gamesPlayed:
+          type: integer
+          description: "Number of games played by the user."
+        points:
+          type: integer
+          description: "Total points earned by the user."
+        streak:
+          type: integer
+          description: "User's current game streak."
+
+    FriendResponse:
+      type: object
+      description: "Response payload for a user's friend."
+      properties:
+        friendId:
+          type: integer
+          description: "Unique identifier of the friend."
+        username:
+          type: string
+          description: "Friend's username."
+        firstName:
+          type: string
+          description: "Friend's first name."
+        lastName:
+          type: string
+          description: "Friend's last name."
+        createdAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the user account was created."
+        gamesPlayed:
+          type: integer
+          description: "Number of games played by the friend."
+        points:
+          type: integer
+          description: "Total points earned by the friend."
+        streak:
+          type: integer
+          description: "Friend's current game streak."
+
+    FriendInvitationResponse:
+      type: object
+      description: "Response payload for a friend invitation."
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: "Unique identifier of the friend invitation."
+        senderFirstName:
+          type: string
+          description: "First name of the user who sent the invitation."
+        senderLastName:
+          type: string
+          description: "Last name of the user who sent the invitation."
+        recipientFirstName:
+          type: string
+          description: "First name of the user who received the invitation."
+        recipientLastName:
+          type: string
+          description: "Last name of the user who received the invitation."
+        status:
+          type: string
+          description: "Current status of the invitation (e.g., pending, accepted, declined)."
+        createdAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the invitation was created."
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: "HTTP status code of the error."
+        error:
+          type: string
+          description: "Error message."
+        cause:
+          type: string
+          description: "Cause of the error."
+        action:
+          type: string
+          description: "Suggested action to resolve the error."
+        timestamp:
+          type: string
+          format: date-time
+          description: "Time when the error occurred."
+        correlationId:
+          type: string
+          description: "Unique identifier for tracking the error."
+
+  examples:
+    LoginRequestExample:
+      value:
+        email: "user@example.com"
+        password: "securePassword123"
+
+    RegisterRequestExample:
+      value:
+        email: "newuser@example.com"
+        password: "securePassword123"
+        username: "johndoe"
+        firstName: "John"
+        lastName: "Doe"
+
+    AuthenticationResponseExample:
+      value:
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+
+    DeckRequestExample:
+      value:
+        name: "Science Deck"
+        description: "A deck containing science-related questions."
+
+    DeckResponseExample:
+      value:
+        deckId: 1
+        name: "Science Deck"
+        description: "A deck containing science-related questions."
+        createdAt: "2024-03-03T12:00:00Z"
+        updatedAt: "2024-03-03T12:30:00Z"
+
+    DeckListResponseExample:
+      value:
+        - deckId: 1
+          name: "Science Deck"
+          description: "A deck containing science-related questions."
+          createdAt: "2024-03-03T12:00:00Z"
+          updatedAt: "2024-03-03T12:30:00Z"
+        - deckId: 2
+          name: "History Deck"
+          description: "A deck containing history-related questions."
+          createdAt: "2024-03-04T14:00:00Z"
+          updatedAt: "2024-03-04T14:45:00Z"
+
+    QuestionRequestExample:
+      value:
+        question: "What is the capital of France?"
+        correctAnswers:
+          - "Paris"
+        incorrectAnswers:
+          - "Berlin"
+          - "Madrid"
+          - "Rome"
+        difficulty: "medium"
+
+    QuestionListRequestExample:
+      value:
+        - question: "What is the capital of France?"
+          correctAnswers:
+            - "Paris"
+          incorrectAnswers:
+            - "Berlin"
+            - "Madrid"
+            - "Rome"
+          difficulty: "medium"
+        - question: "What is 2 + 2?"
+          correctAnswers:
+            - "4"
+          incorrectAnswers:
+            - "3"
+            - "5"
+            - "6"
+          difficulty: "easy"
+
+    QuestionResponseExample:
+      value:
+        questionId: 1
+        question: "What is the capital of France?"
+        correctAnswers:
+          - "Paris"
+        incorrectAnswers:
+          - "Berlin"
+          - "Madrid"
+          - "Rome"
+        difficulty: "medium"
+        createdAt: "2024-03-03T12:00:00Z"
+        updatedAt: "2024-03-03T12:30:00Z"
+
+    QuestionListResponseExample:
+      value:
+        - questionId: 1
+          question: "What is the capital of France?"
+          correctAnswers:
+            - "Paris"
+          incorrectAnswers:
+            - "Berlin"
+            - "Madrid"
+            - "Rome"
+          difficulty: "medium"
+          createdAt: "2024-03-03T12:00:00Z"
+          updatedAt: "2024-03-03T12:30:00Z"
+        - questionId: 2
+          question: "What is 2 + 2?"
+          correctAnswers:
+            - "4"
+          incorrectAnswers:
+            - "3"
+            - "5"
+            - "6"
+          difficulty: "easy"
+          createdAt: "2024-03-04T14:00:00Z"
+          updatedAt: "2024-03-04T14:45:00Z"
+
+    GameSessionResponseExample:
+      value:
+        gameSessionId: 123
+        score: 85
+        correctAnswers: 17
+        totalQuestions: 20
+        duration: "PT15M"
+        accuracy: 85.0
+        startTime: "2024-03-10T14:00:00Z"
+        endTime: "2024-03-10T14:15:00Z"
+        userPerformance:
+          - questionId: 1
+            wasCorrect: true
+            userAnswer: "Answer A"
+          - questionId: 2
+            wasCorrect: false
+            userAnswer: "Answer B"
+
+    GameSessionResponseListExample:
+      value:
+        - gameSessionId: 123
+          score: 85
+          correctAnswers: 17
+          totalQuestions: 20
+          duration: "PT15M"
+          accuracy: 85.0
+          startTime: "2024-03-10T14:00:00Z"
+          endTime: "2024-03-10T14:15:00Z"
+        - gameSessionId: 124
+          score: 90
+          correctAnswers: 18
+          totalQuestions: 20
+          duration: "PT10M"
+          accuracy: 90.0
+          startTime: "2024-03-11T14:00:00Z"
+          endTime: "2024-03-11T14:10:00Z"
+
+    FriendResponseExample:
+      value:
+        friendId: 1
+        username: "johndoe"
+        firstName: "John"
+        lastName: "Doe"
+        createdAt: "2024-03-03T12:00:00Z"
+        gamesPlayed: "43"
+        points: "7890"
+        streak: "26"
+
+    FriendListResponseExample:
+      value:
+        - friendId: 1
+          username: "johndoe"
+          firstName: "John"
+          lastName: "Doe"
+          createdAt: "2024-03-03T12:00:00Z"
+          gamesPlayed: "43"
+          points: "7890"
+          streak: "26"
+        - friendId: 2
+          username: "alicesmith"
+          firstName: "Alice"
+          lastName: "Smith"
+          createdAt: "2024-03-03T12:00:00Z"
+          gamesPlayed: "32"
+          points: "3890"
+          streak: "12"
+
+    UserResponseExample:
+      value:
+        firstName: "John"
+        lastName: "Doe"
+        email: "john.doe@example.com"
+        dailyNotifications: true
+        createdAt: "2024-03-03T12:00:00Z"
+        updatedAt: "2024-03-03T12:30:00Z"
+
+    ErrorResponseExample400_AccountAlreadyActivated:
+      value:
+        status: 400
+        error: "E400001"
+        cause: "Account is already activated"
+        action: "The account has already been activated. No further action is required."
+        timestamp: "2025-03-03T18:20:30.123456789"
+        correlationId: "b2c3d4e5-f678-901a-bcde-23456789abcd"
+
+    ErrorResponseExample401_TokenMissingOrInvalid:
+      value:
+        status: 401
+        error: "E401001"
+        cause: "Token is missing or invalid"
+        action: "Provide a valid token to access this resource"
+        timestamp: "2025-03-03T18:25:05.987654321"
+        correlationId: "d9f8e7c6-b5a4-3210-abcdef123456"
+
+    ErrorResponseExample401_InvalidPassword:
+      value:
+        status: 401
+        error: "E401002"
+        cause: "Invalid password provided"
+        action: "Ensure you have entered the correct password and try again"
+        timestamp: "2025-03-03T18:30:45.123456789"
+        correlationId: "c5d4b3a2-f109-8765-4321-abcdef987654"
+
+    ErrorResponseExample403_UnauthorizedInvitationResponse:
+      value:
+        status: 403
+        error: "E403001"
+        cause: "Unauthorized to respond to this invitation"
+        action: "Ensure that you are the recipient of this invitation and try again"
+        timestamp: "2025-03-03T18:35:20.678901234"
+        correlationId: "e8d7c6b5-a432-1098-7654-3210abcdef12"
+
+    ErrorResponseExample403_AccountNotActivated:
+      value:
+        status: 403
+        error: "E403002"
+        cause: "Account not activated"
+        action: "Ensure that your account is activated. Please check your email for the activation link and try again."
+        timestamp: "2025-03-03T18:40:15.234567890"
+        correlationId: "f3e2d1c0-b987-6543-2109-abcdef543210"
+
+    ErrorResponseExample403_CannotInviteYourself:
+      value:
+        status: 403
+        error: "E403003"
+        cause: "You cannot send an invitation to yourself."
+        action: "Make sure you are not inviting yourself."
+        timestamp: "2025-03-03T18:45:10.345678901"
+        correlationId: "abc123efg456-hijk789-lmnop0123"
+
+    ErrorResponseExample404_UserNotFound:
+      value:
+        status: 404
+        error: "E404001"
+        cause: "User not found with the provided email address"
+        action: "Ensure that the email address is correct or register a new account"
+        timestamp: "2025-03-03T18:50:05.567890123"
+        correlationId: "123abc456def-789ghi012jkl-345mno678pq"
+
+    ErrorResponseExample404_DeckNotFound:
+      value:
+        status: 404
+        error: "E404002"
+        cause: "Deck not found for the provided ID"
+        action: "Verify the deck ID and ensure you have access to this deck"
+        timestamp: "2025-03-03T18:55:30.678901234"
+        correlationId: "pqrs123tuv456-wxyz789-abcd0123"
+
+    ErrorResponseExample404_QuestionNotFound:
+      value:
+        status: 404
+        error: "E404003"
+        cause: "Question not found for the provided ID in the specified deck"
+        action: "Verify the question ID and deck ID, and ensure you have access to the deck"
+        timestamp: "2025-03-03T19:00:15.789012345"
+        correlationId: "lmno456pqrs123-tuv789wxyz0123"
+
+    ErrorResponseExample404_InvitationNotFound:
+      value:
+        status: 404
+        error: "E404004"
+        cause: "Invitation not found for the provided ID"
+        action: "Verify the invitation ID and ensure that it exists before attempting this operation"
+        timestamp: "2025-03-03T19:05:10.890123456"
+        correlationId: "hijk789lmno0123-pqrs456tuv789"
+
+    ErrorResponseExample404_FriendNotFound:
+      value:
+        status: 404
+        error: "E404005"
+        cause: "Friend not found with the provided email address"
+        action: "Ensure that the email address is correct"
+        timestamp: "2025-03-03T19:10:05.901234567"
+        correlationId: "abcdef123456-ghijk789lmno0123"
+
+    ErrorResponseExample409_EmailAlreadyRegistered:
+      value:
+        status: 409
+        error: "E409001"
+        cause: "The email address is already registered"
+        action: "Use a different email address to register or try logging in"
+        timestamp: "2025-03-03T19:15:45.012345678"
+        correlationId: "mnop0123pqrs456tuv789wxyz0123"
+
+    ErrorResponseExample409_FriendInvitationExists:
+      value:
+        status: 409
+        error: "E409002"
+        cause: "Friend invitation already exists between the specified users"
+        action: "Check the existing invitation status or wait for the recipient's response before sending a new invitation"
+        timestamp: "2025-03-03T19:20:30.123456789"
+        correlationId: "wxyz0123abcd456efgh789ijkl0123"
+
+    ErrorResponseExample409_AlreadyFriends:
+      value:
+        status: 409
+        error: "E409003"
+        cause: "You are already friends with this user"
+        action: "You cannot send a friend invitation to someone who is already your friend."
+        timestamp: "2025-03-03T19:25:15.234567890"
+        correlationId: "abcd0123efgh456ijkl789mnop0123"
