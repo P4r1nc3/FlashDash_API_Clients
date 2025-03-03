@@ -7,7 +7,7 @@ FlashDash OpenAPI Clients provide Java client libraries for interacting with Fla
 - Auto-generated clients based on OpenAPI specifications
 - Authentication support using Keycloak
 - Distributed via GitHub Packages for easy inclusion in projects
-- Separate modules for each VLXTR service
+- Separate modules for each FlashDash service
 
 ## Prerequisites
 - **Java 17**
@@ -124,5 +124,5 @@ logging:
 ```
 
 ## Conclusion
-FlashDash OpenAPI Clients provide easy integration with VLXTR microservices, ensuring seamless authentication and API access. Make sure to configure credentials properly and always keep dependencies up to date.
+FlashDash OpenAPI Clients provide easy integration with FlashDash microservices, ensuring seamless authentication and API access. Make sure to configure credentials properly and always keep dependencies up to date.
 
