@@ -33,6 +33,7 @@ paths:
       summary: Register a new user
       description: Allows a new user to create an account.
       operationId: registerUser
+      security: []
       requestBody:
         required: true
         content:
@@ -59,6 +60,7 @@ paths:
       summary: Authenticate a user
       description: Allows a user to log in and receive an authentication token.
       operationId: loginUser
+      security: []
       requestBody:
         required: true
         content:
@@ -88,6 +90,7 @@ paths:
       summary: Activate a user account
       description: Activates a user account using the provided token.
       operationId: activateAccount
+      security: []
       parameters:
         - name: token
           in: query
