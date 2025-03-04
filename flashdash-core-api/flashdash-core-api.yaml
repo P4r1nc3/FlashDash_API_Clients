@@ -1179,6 +1179,10 @@ components:
       type: object
       description: "Summary of a completed game session."
       properties:
+        gameSessionId:
+          type: integer
+          format: int64
+          description: "Unique identifier of the game session."
         score:
           type: integer
           description: "Final score achieved in the game session."
