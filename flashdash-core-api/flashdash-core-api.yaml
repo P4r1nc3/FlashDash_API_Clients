@@ -1101,9 +1101,11 @@ components:
       description: "Response payload for a deck."
       properties:
         deckId:
-          type: integer
-          format: int64
-          description: "Unique identifier of the deck."
+          type: string
+          description: "Id of the deck."
+        deckFrn:
+          type: string
+          description: "FRN of the deck."
         name:
           type: string
           description: "Name of the deck."
@@ -1146,9 +1148,11 @@ components:
       description: "Response payload for a question."
       properties:
         questionId:
-          type: integer
-          format: int64
-          description: "Unique identifier of the question."
+          type: string
+          description: "Id of the question."
+        questionFrn:
+          type: string
+          description: "FRN of the question."
         question:
           type: string
           description: "The text of the question."
@@ -1164,7 +1168,7 @@ components:
           description: "List of incorrect answers."
         difficulty:
           type: string
-          enum: [easy, medium, hard]
+          enum: [ easy, medium, hard ]
           description: "Difficulty level of the question."
         createdAt:
           type: string
@@ -1180,9 +1184,11 @@ components:
       description: "Summary of a completed game session."
       properties:
         gameSessionId:
-          type: integer
-          format: int64
-          description: "Unique identifier of the game session."
+          type: string
+          description: "Id of the game session."
+        gameSessionFrn:
+          type: string
+          description: "FRN of the game session."
         score:
           type: integer
           description: "Final score achieved in the game session."
@@ -1194,8 +1200,7 @@ components:
           description: "Total number of questions in the session."
         duration:
           type: string
-          format: duration
-          description: "Time taken to complete the session."
+          description: "Time taken to complete the session in minutes."
         accuracy:
           type: number
           format: float
@@ -1214,9 +1219,9 @@ components:
           items:
             type: object
             properties:
-              questionId:
-                type: integer
-                description: "ID of the question."
+              questionFrn:
+                type: string
+                description: "FRN of the question."
               wasCorrect:
                 type: boolean
                 description: "Indicates whether the user answered correctly."
@@ -1229,8 +1234,11 @@ components:
       description: "Response payload for user details."
       properties:
         userId:
-          type: integer
-          description: "Unique identifier of the user."
+          type: string
+          description: "Id of the user."
+        userFrn:
+          type: string
+          description: "FRN of the user."
         email:
           type: string
           format: email
@@ -1269,9 +1277,12 @@ components:
       type: object
       description: "Response payload for a user's friend."
       properties:
-        friendId:
-          type: integer
-          description: "Unique identifier of the friend."
+        userId:
+          type: string
+          description: "Id of the friend."
+        userFrn:
+          type: string
+          description: "FRN of the friend."
         username:
           type: string
           description: "Friend's username."
@@ -1299,10 +1310,12 @@ components:
       type: object
       description: "Response payload for a friend invitation."
       properties:
-        id:
-          type: integer
-          format: int64
-          description: "Unique identifier of the friend invitation."
+        friendInvitationId:
+          type: string
+          description: "Id of the friend invitation."
+        friendInvitationFrn:
+          type: string
+          description: "FRN of the friend invitation."
         senderFirstName:
           type: string
           description: "First name of the user who sent the invitation."
