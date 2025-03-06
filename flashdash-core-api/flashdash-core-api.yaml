@@ -1602,7 +1602,8 @@ components:
 
     QuestionResponseExample:
       value:
-        questionId: 1
+        questionId: "ByCPCfpqTKjgaAADYZFHD1"
+        questionFrn: "frn:flashdash:question:ByCPCfpqTKjgaAADYZFHD1"
         question: "What is the capital of France?"
         correctAnswers:
           - "Paris"
@@ -1616,7 +1617,8 @@ components:
 
     QuestionListResponseExample:
       value:
-        - questionId: 1
+        - questionId: "ByCPCfpqTKjgaAADYZFHD1"
+          questionFrn: "frn:flashdash:question:ByCPCfpqTKjgaAADYZFHD1"
           question: "What is the capital of France?"
           correctAnswers:
             - "Paris"
@@ -1627,7 +1629,8 @@ components:
           difficulty: "medium"
           createdAt: "2024-03-03T12:00:00Z"
           updatedAt: "2024-03-03T12:30:00Z"
-        - questionId: 2
+        - questionId: "HOGWNe0tCQurLlbT0CDQXi"
+          questionFrn: "frn:flashdash:question:HOGWNe0tCQurLlbT0CDQXi"
           question: "What is 2 + 2?"
           correctAnswers:
             - "4"
