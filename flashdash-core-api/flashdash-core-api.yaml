@@ -1726,7 +1726,6 @@ components:
           username: "alicesmith"
           firstName: "Alice"
           lastName: "Smith"
-          createdAt: "2024-03-03T12:00:00Z"
           gamesPlayed: "32"
           points: "3890"
           streak: "12"
