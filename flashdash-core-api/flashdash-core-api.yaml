@@ -14,6 +14,8 @@ servers:
 tags:
   - name: Auth
     description: Authentication endpoints
+  - name: Users
+    description: User management endpoints
   - name: Decks
     description: Deck management endpoints
   - name: Questions
@@ -151,6 +153,83 @@ paths:
               examples:
                 User Not Found:
                   $ref: "#/components/examples/ErrorResponseExample404_UserNotFound"
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get details of the authenticated user
+      security:
+        - bearerAuth: [ ]
+      operationId: getUser
+      responses:
+        "200":
+          description: Successfully retrieved user details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
+    delete:
+      tags:
+        - Users
+      summary: Delete the authenticated user's account
+      security:
+        - bearerAuth: [ ]
+      operationId: deleteUser
+      responses:
+        "204":
+          description: Successfully deleted the user account
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
+    put:
+      tags:
+        - Users
+      summary: Change the password of the authenticated user
+      security:
+        - bearerAuth: [ ]
+      operationId: changePassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPassword:
+                  type: string
+                  description: "Current password of the user."
+                newPassword:
+                  type: string
+                  description: "New password for the user."
+      responses:
+        "200":
+          description: Password changed successfully
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /decks:
     post:
@@ -1585,26 +1664,28 @@ components:
 
     FriendResponseExample:
       value:
-        friendId: 1
+        userId: "HOGWNe0tCQurLlbT0CDQXi"
+        userFrn: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
         username: "johndoe"
         firstName: "John"
         lastName: "Doe"
-        createdAt: "2024-03-03T12:00:00Z"
         gamesPlayed: "43"
         points: "7890"
         streak: "26"
 
+
     FriendListResponseExample:
       value:
-        - friendId: 1
+        - userId: "HOGWNe0tCQurLlbT0CDQXi"
+          userFrn: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
           username: "johndoe"
           firstName: "John"
           lastName: "Doe"
-          createdAt: "2024-03-03T12:00:00Z"
           gamesPlayed: "43"
           points: "7890"
           streak: "26"
-        - friendId: 2
+        - userId: "ByCPCfpqTKjgaAADYZFHD1"
+          userFrn: "frn:flashdash:user:ByCPCfpqTKjgaAADYZFHD1"
           username: "alicesmith"
           firstName: "Alice"
           lastName: "Smith"
