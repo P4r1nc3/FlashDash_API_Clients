@@ -1,7 +1,11 @@
 openapi: 3.0.3
 info:
   title: FlashDash API
-  description: FlashDash is an application for learning through quizzes with gamification elements.
+  description: |
+    FlashDash is an interactive learning application that enhances knowledge retention 
+    through quizzes combined with gamification elements. It offers a fun and engaging way 
+    to learn various topics by using dynamic quizzes, personalized decks, and competitive 
+    game sessions.
   version: 1.0.1
   license:
     name: MIT
@@ -33,7 +37,8 @@ paths:
       tags:
         - Auth
       summary: Register a new user
-      description: Allows a new user to create an account.
+      description: |
+        Allows a new user to create an account.
       operationId: registerUser
       security: []
       requestBody:
@@ -67,7 +72,8 @@ paths:
       tags:
         - Auth
       summary: Authenticate a user
-      description: Allows a user to log in and receive an authentication token.
+      description: |
+        Authenticates a user and returns an authentication token.
       operationId: loginUser
       security: []
       requestBody:
@@ -122,7 +128,8 @@ paths:
       tags:
         - Auth
       summary: Activate a user account
-      description: Activates a user account using the provided token.
+      description: |
+        Activates a user account using the provided token received via email.
       operationId: activateAccount
       security: []
       parameters:
@@ -158,6 +165,8 @@ paths:
       tags:
         - Users
       summary: Get details of the authenticated user
+      description: |
+        Retrieves details of the authenticated user.
       security:
         - bearerAuth: [ ]
       operationId: getUser
@@ -168,6 +177,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserResponse"
+              example:
+                $ref: "#/components/examples/UserResponseExample"
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -182,6 +193,8 @@ paths:
       tags:
         - Users
       summary: Delete the authenticated user's account
+      description: |
+        Deletes the authenticated user's account.
       security:
         - bearerAuth: [ ]
       operationId: deleteUser
@@ -202,6 +215,8 @@ paths:
       tags:
         - Users
       summary: Change the password of the authenticated user
+      description: |
+        Changes the authenticated user's password.
       security:
         - bearerAuth: [ ]
       operationId: changePassword
@@ -236,6 +251,8 @@ paths:
       tags:
         - Decks
       summary: Create a new deck
+      description: |
+        Creates a new deck for the authenticated user.
       security:
         - bearerAuth: []
       operationId: createDeck
@@ -272,6 +289,8 @@ paths:
       tags:
         - Decks
       summary: Get all decks for the authenticated user
+      description: |
+        Retrieves all decks owned by the authenticated user.
       security:
         - bearerAuth: []
       operationId: getAllDecks
@@ -302,6 +321,8 @@ paths:
       tags:
         - Decks
       summary: Get a specific deck by ID
+      description: |
+        Retrieves details of a specific deck.
       security:
         - bearerAuth: []
       operationId: getDeckById
@@ -345,6 +366,8 @@ paths:
       tags:
         - Decks
       summary: Update a deck
+      description: |
+        Updates an existing deck.
       security:
         - bearerAuth: []
       operationId: updateDeck
@@ -397,6 +420,8 @@ paths:
       tags:
         - Decks
       summary: Delete a deck
+      description: |
+        Deletes a deck.
       security:
         - bearerAuth: []
       operationId: deleteDeck
@@ -434,6 +459,9 @@ paths:
       tags:
         - Questions
       summary: Add a question to a deck
+      description: |
+        Adds a new question to the specified deck.
+        The request body should include the question details.
       security:
         - bearerAuth: []
       operationId: addQuestion
@@ -486,6 +514,9 @@ paths:
       tags:
         - Questions
       summary: Get all questions in a deck
+      description: |
+        Retrieves all questions in the specified deck.
+        Requires authentication.
       security:
         - bearerAuth: []
       operationId: getAllQuestions
@@ -532,6 +563,8 @@ paths:
       tags:
         - Questions
       summary: Get a specific question by ID within a deck
+      description: |
+        Retrieves a specific question from the specified deck.
       security:
         - bearerAuth: []
       operationId: getQuestionById
@@ -583,6 +616,9 @@ paths:
       tags:
         - Questions
       summary: Update a question in a deck
+      description: |
+        Updates an existing question within the specified deck.
+        The request body should contain updated question details.
       security:
         - bearerAuth: []
       operationId: updateQuestion
@@ -643,6 +679,8 @@ paths:
       tags:
         - Questions
       summary: Delete a question from a deck
+      description: |
+        Removes a question from the specified deck.
       security:
         - bearerAuth: []
       operationId: deleteQuestion
@@ -688,6 +726,9 @@ paths:
       tags:
         - Game Sessions
       summary: Start a game session for a specific deck
+      description: |
+        Starts a new game session using the specified deck.
+        The session will return a set of questions from the deck.
       security:
         - bearerAuth: []
       operationId: startGameSession
@@ -734,6 +775,9 @@ paths:
       tags:
         - Game Sessions
       summary: End a game session and submit answers
+      description: |
+        Ends an active game session for the specified deck.
+        The request body should include the user's answers to the session questions.
       security:
         - bearerAuth: []
       operationId: endGameSession
@@ -789,6 +833,8 @@ paths:
       tags:
         - Game Sessions
       summary: Get all game sessions for a specific deck
+      description: |
+        Retrieves all game sessions that have been played using the specified deck.
       security:
         - bearerAuth: []
       operationId: getAllGameSessions
@@ -835,6 +881,8 @@ paths:
       tags:
         - Game Sessions
       summary: Get details of a specific game session
+      description: |
+        Retrieves details of a specific game session for the specified deck.
       security:
         - bearerAuth: []
       operationId: getGameSessionById
@@ -885,6 +933,9 @@ paths:
       tags:
         - Friends
       summary: Get the list of friends
+      description: |
+        Retrieves the list of friends for the authenticated user.
+        Requires a valid authentication token.
       security:
         - bearerAuth: []
       operationId: getFriends
@@ -915,6 +966,8 @@ paths:
       tags:
         - Friends
       summary: Get the friend details
+      description: |
+        Retrieves detailed information about a specific friend identified by `friendId`.
       security:
         - bearerAuth: []
       operationId: getFriend
@@ -957,6 +1010,8 @@ paths:
       tags:
         - Friends
       summary: Remove a friend
+      description: |
+        Removes a friend from the authenticated user's friend list.
       security:
         - bearerAuth: []
       operationId: deleteFriend
@@ -993,6 +1048,10 @@ paths:
       tags:
         - Friend Invitations
       summary: Send a friend invitation
+      description: |
+        Sends a friend invitation to a user using their email address.
+        The recipient’s email should be provided as a query parameter `recipientEmail`.
+        Requires authentication.
       security:
         - bearerAuth: []
       operationId: sendFriendInvitation
@@ -1020,6 +1079,9 @@ paths:
       tags:
         - Friend Invitations
       summary: Get received friend invitations
+      description: |
+        Retrieves a list of friend invitations received by the authenticated user.
+        Each invitation includes details about the sender and creation time.
       security:
         - bearerAuth: []
       operationId: getReceivedInvitations
@@ -1032,6 +1094,9 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/FriendInvitationResponseReceived"
+              examples:
+                Friend Invitation Received:
+                  $ref: "#/components/examples/FriendInvitationResponseReceivedExample"
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -1047,6 +1112,9 @@ paths:
       tags:
         - Friend Invitations
       summary: Get sent friend invitations
+      description: |
+        Retrieves a list of friend invitations sent by the authenticated user.
+        Each invitation includes details about the recipient and creation time.
       security:
         - bearerAuth: []
       operationId: getSentInvitations
@@ -1059,6 +1127,9 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/FriendInvitationResponseSent"
+              examples:
+                Friend Invitation Sent:
+                  $ref: "#/components/examples/FriendInvitationResponseSentExample"
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -1074,6 +1145,9 @@ paths:
       tags:
         - Friend Invitations
       summary: Respond to a friend invitation
+      description: |
+        Responds to a received friend invitation by updating its status.
+        The new status should be provided as a query parameter.
       security:
         - bearerAuth: []
       operationId: respondToInvitation
@@ -1163,6 +1237,61 @@ components:
         token:
           type: string
           description: "JWT authentication token."
+
+    UserResponse:
+      type: object
+      description: "Response payload for user details."
+      properties:
+        userId:
+          type: string
+          description: "Id of the user."
+        userFrn:
+          type: string
+          description: "FRN of the user."
+        email:
+          type: string
+          format: email
+          description: "User's email address."
+        username:
+          type: string
+          description: "User's username."
+        firstName:
+          type: string
+          description: "User's first name."
+        lastName:
+          type: string
+          description: "User's last name."
+        createdAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the user account was created."
+        updatedAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the user account was last updated."
+        dailyNotifications:
+          type: integer
+          description: "Number of daily notifications received by the user."
+        gamesPlayed:
+          type: integer
+          description: "Number of games played by the user."
+        points:
+          type: integer
+          description: "Total points earned by the user."
+        streak:
+          type: integer
+          description: "User's current game streak."
+
+    ChangePasswordRequest:
+      type: object
+      description: "Request payload for changing the password."
+      properties:
+        oldPassword:
+          type: string
+          description: "Current password of the user."
+        newPassword:
+          type: string
+          description: "New password for the user."
 
     DeckRequest:
       type: object
@@ -1308,50 +1437,6 @@ components:
                 type: string
                 description: "The answer given by the user."
 
-    UserResponse:
-      type: object
-      description: "Response payload for user details."
-      properties:
-        userId:
-          type: string
-          description: "Id of the user."
-        userFrn:
-          type: string
-          description: "FRN of the user."
-        email:
-          type: string
-          format: email
-          description: "User's email address."
-        username:
-          type: string
-          description: "User's username."
-        firstName:
-          type: string
-          description: "User's first name."
-        lastName:
-          type: string
-          description: "User's last name."
-        createdAt:
-          type: string
-          format: date-time
-          description: "Timestamp when the user account was created."
-        updatedAt:
-          type: string
-          format: date-time
-          description: "Timestamp when the user account was last updated."
-        dailyNotifications:
-          type: integer
-          description: "Number of daily notifications received by the user."
-        gamesPlayed:
-          type: integer
-          description: "Number of games played by the user."
-        points:
-          type: integer
-          description: "Total points earned by the user."
-        streak:
-          type: integer
-          description: "User's current game streak."
-
     FriendResponse:
       type: object
       description: "Response payload for a user's friend."
@@ -1388,50 +1473,22 @@ components:
         invitationId:
           type: string
           description: "ID of the friend invitation."
-          example: "EooNUUfHdRXpYY0m00SbaW"
         invitationFrn:
           type: string
           description: "FRN of the friend invitation."
-          example: "frn:flashdash:invitation:EooNUUfHdRXpYY0m00SbaW"
         status:
           type: string
           description: "Current status of the invitation (e.g., PENDING, ACCEPTED, DECLINED)."
-          example: "PENDING"
         createdAt:
           type: string
           format: date-time
           description: "Timestamp when the invitation was created."
-          example: "2025-03-06T00:12:47.645226"
         updatedAt:
           type: string
           format: date-time
           description: "Timestamp when the invitation was last updated."
-          example: "2025-03-06T01:00:00.123456"
         sender:
-          type: object
-          description: "Details of the user who sent the invitation."
-          properties:
-            userId:
-              type: string
-              description: "ID of the sender."
-              example: "ByCPCfpqTKjgaAADYZFHD1"
-            userFrn:
-              type: string
-              description: "FRN of the sender."
-              example: "frn:flashdash:user:ByCPCfpqTKjgaAADYZFHD1"
-            firstName:
-              type: string
-              description: "First name of the sender."
-              example: "John"
-            lastName:
-              type: string
-              description: "Last name of the sender."
-              example: "Doe"
-            email:
-              type: string
-              format: email
-              description: "Email of the sender."
-              example: "johndoe@example.com"
+          $ref: "#/components/schemas/UserSummary"
 
     FriendInvitationResponseSent:
       type: object
@@ -1440,50 +1497,43 @@ components:
         invitationId:
           type: string
           description: "ID of the friend invitation."
-          example: "EooNUUfHdRXpYY0m00SbaW"
         invitationFrn:
           type: string
           description: "FRN of the friend invitation."
-          example: "frn:flashdash:invitation:EooNUUfHdRXpYY0m00SbaW"
         status:
           type: string
           description: "Current status of the invitation (e.g., PENDING, ACCEPTED, DECLINED)."
-          example: "PENDING"
         createdAt:
           type: string
           format: date-time
           description: "Timestamp when the invitation was created."
-          example: "2025-03-06T00:12:47.645226"
         updatedAt:
           type: string
           format: date-time
           description: "Timestamp when the invitation was last updated."
-          example: "2025-03-06T01:00:00.123456"
         recipient:
-          type: object
-          description: "Details of the user who received the invitation."
-          properties:
-            userId:
-              type: string
-              description: "ID of the recipient."
-              example: "HOGWNe0tCQurLlbT0CDQXi"
-            userFrn:
-              type: string
-              description: "FRN of the recipient."
-              example: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
-            firstName:
-              type: string
-              description: "First name of the recipient."
-              example: "Alice"
-            lastName:
-              type: string
-              description: "Last name of the recipient."
-              example: "Smith"
-            email:
-              type: string
-              format: email
-              description: "Email of the recipient."
-              example: "alicesmith@example.com"
+          $ref: "#/components/schemas/UserSummary"
+
+    UserSummary:
+      type: object
+      description: "Summary details of a user (used in friend invitations)."
+      properties:
+        userId:
+          type: string
+          description: "ID of the user."
+        userFrn:
+          type: string
+          description: "FRN of the user."
+        firstName:
+          type: string
+          description: "First name of the user."
+        lastName:
+          type: string
+          description: "Last name of the user."
+        email:
+          type: string
+          format: email
+          description: "Email of the user."
 
     ErrorResponse:
       type: object
@@ -1526,6 +1576,26 @@ components:
       value:
         token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 
+    UserResponseExample:
+      value:
+        userId: "HOGWNe0tCQurLlbT0CDQXi"
+        userFrn: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
+        email: "user@example.com"
+        username: "flashgamer"
+        firstName: "John"
+        lastName: "Doe"
+        createdAt: "2023-05-15T10:30:00Z"
+        updatedAt: "2024-03-06T08:45:00Z"
+        dailyNotifications: 5
+        gamesPlayed: 120
+        points: 4500
+        streak: 7
+
+    ChangePasswordRequestExample:
+      value:
+        oldPassword: "OldSecurePass123!"
+        newPassword: "NewStrongerPass456!"
+
     DeckRequestExample:
       value:
         name: "Science Deck"
@@ -1533,7 +1603,8 @@ components:
 
     DeckResponseExample:
       value:
-        deckId: 1
+        deckId: "ByCPCfpqTKjgaAADYZFHD1"
+        deckFrn: "frn:flashdash:deck:ByCPCfpqTKjgaAADYZFHD1"
         name: "Science Deck"
         description: "A deck containing science-related questions."
         createdAt: "2024-03-03T12:00:00Z"
@@ -1541,12 +1612,14 @@ components:
 
     DeckListResponseExample:
       value:
-        - deckId: 1
+        - deckId: "ByCPCfpqTKjgaAADYZFHD1"
+          deckFrn: "frn:flashdash:deck:ByCPCfpqTKjgaAADYZFHD1"
           name: "Science Deck"
           description: "A deck containing science-related questions."
           createdAt: "2024-03-03T12:00:00Z"
           updatedAt: "2024-03-03T12:30:00Z"
-        - deckId: 2
+        - deckId: "HOGWNe0tCQurLlbT0CDQXi"
+          deckFrn: "frn:flashdash:deck:HOGWNe0tCQurLlbT0CDQXi"
           name: "History Deck"
           description: "A deck containing history-related questions."
           createdAt: "2024-03-04T14:00:00Z"
@@ -1584,7 +1657,8 @@ components:
 
     QuestionResponseExample:
       value:
-        questionId: 1
+        questionId: "ByCPCfpqTKjgaAADYZFHD1"
+        questionFrn: "frn:flashdash:question:ByCPCfpqTKjgaAADYZFHD1"
         question: "What is the capital of France?"
         correctAnswers:
           - "Paris"
@@ -1598,7 +1672,8 @@ components:
 
     QuestionListResponseExample:
       value:
-        - questionId: 1
+        - questionId: "ByCPCfpqTKjgaAADYZFHD1"
+          questionFrn: "frn:flashdash:question:ByCPCfpqTKjgaAADYZFHD1"
           question: "What is the capital of France?"
           correctAnswers:
             - "Paris"
@@ -1609,7 +1684,8 @@ components:
           difficulty: "medium"
           createdAt: "2024-03-03T12:00:00Z"
           updatedAt: "2024-03-03T12:30:00Z"
-        - questionId: 2
+        - questionId: "HOGWNe0tCQurLlbT0CDQXi"
+          questionFrn: "frn:flashdash:question:HOGWNe0tCQurLlbT0CDQXi"
           question: "What is 2 + 2?"
           correctAnswers:
             - "4"
@@ -1623,7 +1699,8 @@ components:
 
     GameSessionResponseExample:
       value:
-        gameSessionId: 123
+        gameSessionId: "HOGWNe0tCQurLlbT0CDQXi"
+        gameSessionFrn: "frn:flashdash:game-session:HOGWNe0tCQurLlbT0CDQXi"
         score: 85
         correctAnswers: 17
         totalQuestions: 20
@@ -1632,16 +1709,17 @@ components:
         startTime: "2024-03-10T14:00:00Z"
         endTime: "2024-03-10T14:15:00Z"
         userPerformance:
-          - questionId: 1
+          - questionFrn: "frn:flashdash:question:12345"
             wasCorrect: true
             userAnswer: "Answer A"
-          - questionId: 2
+          - questionFrn: "frn:flashdash:question:67890"
             wasCorrect: false
             userAnswer: "Answer B"
 
     GameSessionResponseListExample:
       value:
-        - gameSessionId: 123
+        - gameSessionId: "HOGWNe0tCQurLlbT0CDQXi"
+          gameSessionFrn: "frn:flashdash:game-session:HOGWNe0tCQurLlbT0CDQXi"
           score: 85
           correctAnswers: 17
           totalQuestions: 20
@@ -1649,7 +1727,8 @@ components:
           accuracy: 85.0
           startTime: "2024-03-10T14:00:00Z"
           endTime: "2024-03-10T14:15:00Z"
-        - gameSessionId: 124
+        - gameSessionId: "ByCPCfpqTKjgaAADYZFHD1"
+          gameSessionFrn: "frn:flashdash:game-session:ByCPCfpqTKjgaAADYZFHD1"
           score: 90
           correctAnswers: 18
           totalQuestions: 20
@@ -1669,7 +1748,6 @@ components:
         points: "7890"
         streak: "26"
 
-
     FriendListResponseExample:
       value:
         - userId: "HOGWNe0tCQurLlbT0CDQXi"
@@ -1685,19 +1763,37 @@ components:
           username: "alicesmith"
           firstName: "Alice"
           lastName: "Smith"
-          createdAt: "2024-03-03T12:00:00Z"
           gamesPlayed: "32"
           points: "3890"
           streak: "12"
 
-    UserResponseExample:
+    FriendInvitationResponseReceivedExample:
       value:
-        firstName: "John"
-        lastName: "Doe"
-        email: "john.doe@example.com"
-        dailyNotifications: true
-        createdAt: "2024-03-03T12:00:00Z"
-        updatedAt: "2024-03-03T12:30:00Z"
+        - invitationId: "EooNUUfHdRXpYY0m00SbaW"
+          invitationFrn: "frn:flashdash:invitation:EooNUUfHdRXpYY0m00SbaW"
+          status: "PENDING"
+          createdAt: "2025-03-06T00:12:47.645226"
+          updatedAt: "2025-03-06T01:00:00.123456"
+          sender:
+            userId: "ByCPCfpqTKjgaAADYZFHD1"
+            userFrn: "frn:flashdash:user:ByCPCfpqTKjgaAADYZFHD1"
+            firstName: "John"
+            lastName: "Doe"
+            email: "johndoe@example.com"
+
+    FriendInvitationResponseSentExample:
+      value:
+        - invitationId: "EooNUUfHdRXpYY0m00SbaW"
+          invitationFrn: "frn:flashdash:invitation:EooNUUfHdRXpYY0m00SbaW"
+          status: "PENDING"
+          createdAt: "2025-03-06T00:12:47.645226"
+          updatedAt: "2025-03-06T01:00:00.123456"
+          recipient:
+            userId: "HOGWNe0tCQurLlbT0CDQXi"
+            userFrn: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
+            firstName: "Alice"
+            lastName: "Smith"
+            email: "alicesmith@example.com"
 
     ErrorResponseExample400_AccountAlreadyActivated:
       value:
