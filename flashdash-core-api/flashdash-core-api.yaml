@@ -1548,7 +1548,8 @@ components:
 
     DeckResponseExample:
       value:
-        deckId: 1
+        deckId: "ByCPCfpqTKjgaAADYZFHD1"
+        deckFrn: "frn:flashdash:deck:ByCPCfpqTKjgaAADYZFHD1"
         name: "Science Deck"
         description: "A deck containing science-related questions."
         createdAt: "2024-03-03T12:00:00Z"
@@ -1556,12 +1557,14 @@ components:
 
     DeckListResponseExample:
       value:
-        - deckId: 1
+        - deckId: "ByCPCfpqTKjgaAADYZFHD1"
+          deckFrn: "frn:flashdash:deck:ByCPCfpqTKjgaAADYZFHD1"
           name: "Science Deck"
           description: "A deck containing science-related questions."
           createdAt: "2024-03-03T12:00:00Z"
           updatedAt: "2024-03-03T12:30:00Z"
-        - deckId: 2
+        - deckId: "HOGWNe0tCQurLlbT0CDQXi"
+          deckFrn: "frn:flashdash:deck:HOGWNe0tCQurLlbT0CDQXi"
           name: "History Deck"
           description: "A deck containing history-related questions."
           createdAt: "2024-03-04T14:00:00Z"
