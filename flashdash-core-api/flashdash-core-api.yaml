@@ -952,7 +952,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/FriendInvitationResponse"
+                  $ref: "#/components/schemas/FriendInvitationResponseReceived"
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -979,7 +979,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/FriendInvitationResponse"
+                  $ref: "#/components/schemas/FriendInvitationResponseSent"
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -1306,35 +1306,109 @@ components:
           type: integer
           description: "Friend's current game streak."
 
-    FriendInvitationResponse:
+    FriendInvitationResponseReceived:
       type: object
-      description: "Response payload for a friend invitation."
+      description: "Response payload for a received friend invitation."
       properties:
-        friendInvitationId:
+        invitationId:
           type: string
-          description: "Id of the friend invitation."
-        friendInvitationFrn:
+          description: "ID of the friend invitation."
+          example: "EooNUUfHdRXpYY0m00SbaW"
+        invitationFrn:
           type: string
           description: "FRN of the friend invitation."
-        senderFirstName:
-          type: string
-          description: "First name of the user who sent the invitation."
-        senderLastName:
-          type: string
-          description: "Last name of the user who sent the invitation."
-        recipientFirstName:
-          type: string
-          description: "First name of the user who received the invitation."
-        recipientLastName:
-          type: string
-          description: "Last name of the user who received the invitation."
+          example: "frn:flashdash:invitation:EooNUUfHdRXpYY0m00SbaW"
         status:
           type: string
-          description: "Current status of the invitation (e.g., pending, accepted, declined)."
+          description: "Current status of the invitation (e.g., PENDING, ACCEPTED, DECLINED)."
+          example: "PENDING"
         createdAt:
           type: string
           format: date-time
           description: "Timestamp when the invitation was created."
+          example: "2025-03-06T00:12:47.645226"
+        updatedAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the invitation was last updated."
+          example: "2025-03-06T01:00:00.123456"
+        sender:
+          type: object
+          description: "Details of the user who sent the invitation."
+          properties:
+            userId:
+              type: string
+              description: "ID of the sender."
+              example: "ByCPCfpqTKjgaAADYZFHD1"
+            userFrn:
+              type: string
+              description: "FRN of the sender."
+              example: "frn:flashdash:user:ByCPCfpqTKjgaAADYZFHD1"
+            firstName:
+              type: string
+              description: "First name of the sender."
+              example: "John"
+            lastName:
+              type: string
+              description: "Last name of the sender."
+              example: "Doe"
+            email:
+              type: string
+              format: email
+              description: "Email of the sender."
+              example: "johndoe@example.com"
+
+    FriendInvitationResponseSent:
+      type: object
+      description: "Response payload for a sent friend invitation."
+      properties:
+        invitationId:
+          type: string
+          description: "ID of the friend invitation."
+          example: "EooNUUfHdRXpYY0m00SbaW"
+        invitationFrn:
+          type: string
+          description: "FRN of the friend invitation."
+          example: "frn:flashdash:invitation:EooNUUfHdRXpYY0m00SbaW"
+        status:
+          type: string
+          description: "Current status of the invitation (e.g., PENDING, ACCEPTED, DECLINED)."
+          example: "PENDING"
+        createdAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the invitation was created."
+          example: "2025-03-06T00:12:47.645226"
+        updatedAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the invitation was last updated."
+          example: "2025-03-06T01:00:00.123456"
+        recipient:
+          type: object
+          description: "Details of the user who received the invitation."
+          properties:
+            userId:
+              type: string
+              description: "ID of the recipient."
+              example: "HOGWNe0tCQurLlbT0CDQXi"
+            userFrn:
+              type: string
+              description: "FRN of the recipient."
+              example: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
+            firstName:
+              type: string
+              description: "First name of the recipient."
+              example: "Alice"
+            lastName:
+              type: string
+              description: "Last name of the recipient."
+              example: "Smith"
+            email:
+              type: string
+              format: email
+              description: "Email of the recipient."
+              example: "alicesmith@example.com"
 
     ErrorResponse:
       type: object
