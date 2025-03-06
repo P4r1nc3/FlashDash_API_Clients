@@ -1526,6 +1526,21 @@ components:
       value:
         token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 
+    UserResponseExample:
+      value:
+        userId: "HOGWNe0tCQurLlbT0CDQXi"
+        userFrn: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
+        email: "user@example.com"
+        username: "flashgamer"
+        firstName: "John"
+        lastName: "Doe"
+        createdAt: "2023-05-15T10:30:00Z"
+        updatedAt: "2024-03-06T08:45:00Z"
+        dailyNotifications: 5
+        gamesPlayed: 120
+        points: 4500
+        streak: 7
+
     DeckRequestExample:
       value:
         name: "Science Deck"
