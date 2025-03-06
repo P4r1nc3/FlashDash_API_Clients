@@ -1,7 +1,11 @@
 openapi: 3.0.3
 info:
   title: FlashDash API
-  description: FlashDash is an application for learning through quizzes with gamification elements.
+  description: |
+    FlashDash is an interactive learning application that enhances knowledge retention 
+    through quizzes combined with gamification elements. It offers a fun and engaging way 
+    to learn various topics by using dynamic quizzes, personalized decks, and competitive 
+    game sessions.
   version: 1.0.1
   license:
     name: MIT
@@ -33,7 +37,8 @@ paths:
       tags:
         - Auth
       summary: Register a new user
-      description: Allows a new user to create an account.
+      description: |
+        Allows a new user to create an account.
       operationId: registerUser
       security: []
       requestBody:
@@ -67,7 +72,8 @@ paths:
       tags:
         - Auth
       summary: Authenticate a user
-      description: Allows a user to log in and receive an authentication token.
+      description: |
+        Authenticates a user and returns an authentication token.
       operationId: loginUser
       security: []
       requestBody:
@@ -122,7 +128,8 @@ paths:
       tags:
         - Auth
       summary: Activate a user account
-      description: Activates a user account using the provided token.
+      description: |
+        Activates a user account using the provided token received via email.
       operationId: activateAccount
       security: []
       parameters:
@@ -158,6 +165,8 @@ paths:
       tags:
         - Users
       summary: Get details of the authenticated user
+      description: |
+        Retrieves details of the authenticated user.
       security:
         - bearerAuth: [ ]
       operationId: getUser
@@ -184,6 +193,8 @@ paths:
       tags:
         - Users
       summary: Delete the authenticated user's account
+      description: |
+        Deletes the authenticated user's account.
       security:
         - bearerAuth: [ ]
       operationId: deleteUser
@@ -204,6 +215,8 @@ paths:
       tags:
         - Users
       summary: Change the password of the authenticated user
+      description: |
+        Changes the authenticated user's password.
       security:
         - bearerAuth: [ ]
       operationId: changePassword
@@ -238,6 +251,8 @@ paths:
       tags:
         - Decks
       summary: Create a new deck
+      description: |
+        Creates a new deck for the authenticated user.
       security:
         - bearerAuth: []
       operationId: createDeck
@@ -274,6 +289,8 @@ paths:
       tags:
         - Decks
       summary: Get all decks for the authenticated user
+      description: |
+        Retrieves all decks owned by the authenticated user.
       security:
         - bearerAuth: []
       operationId: getAllDecks
@@ -304,6 +321,8 @@ paths:
       tags:
         - Decks
       summary: Get a specific deck by ID
+      description: |
+        Retrieves details of a specific deck.
       security:
         - bearerAuth: []
       operationId: getDeckById
@@ -347,6 +366,8 @@ paths:
       tags:
         - Decks
       summary: Update a deck
+      description: |
+        Updates an existing deck.
       security:
         - bearerAuth: []
       operationId: updateDeck
@@ -399,6 +420,8 @@ paths:
       tags:
         - Decks
       summary: Delete a deck
+      description: |
+        Deletes a deck.
       security:
         - bearerAuth: []
       operationId: deleteDeck
@@ -436,6 +459,9 @@ paths:
       tags:
         - Questions
       summary: Add a question to a deck
+      description: |
+        Adds a new question to the specified deck.
+        The request body should include the question details.
       security:
         - bearerAuth: []
       operationId: addQuestion
@@ -488,6 +514,9 @@ paths:
       tags:
         - Questions
       summary: Get all questions in a deck
+      description: |
+        Retrieves all questions in the specified deck.
+        Requires authentication.
       security:
         - bearerAuth: []
       operationId: getAllQuestions
@@ -534,6 +563,8 @@ paths:
       tags:
         - Questions
       summary: Get a specific question by ID within a deck
+      description: |
+        Retrieves a specific question from the specified deck.
       security:
         - bearerAuth: []
       operationId: getQuestionById
@@ -585,6 +616,9 @@ paths:
       tags:
         - Questions
       summary: Update a question in a deck
+      description: |
+        Updates an existing question within the specified deck.
+        The request body should contain updated question details.
       security:
         - bearerAuth: []
       operationId: updateQuestion
@@ -645,6 +679,8 @@ paths:
       tags:
         - Questions
       summary: Delete a question from a deck
+      description: |
+        Removes a question from the specified deck.
       security:
         - bearerAuth: []
       operationId: deleteQuestion
@@ -690,6 +726,9 @@ paths:
       tags:
         - Game Sessions
       summary: Start a game session for a specific deck
+      description: |
+        Starts a new game session using the specified deck.
+        The session will return a set of questions from the deck.
       security:
         - bearerAuth: []
       operationId: startGameSession
@@ -736,6 +775,9 @@ paths:
       tags:
         - Game Sessions
       summary: End a game session and submit answers
+      description: |
+        Ends an active game session for the specified deck.
+        The request body should include the user's answers to the session questions.
       security:
         - bearerAuth: []
       operationId: endGameSession
@@ -791,6 +833,8 @@ paths:
       tags:
         - Game Sessions
       summary: Get all game sessions for a specific deck
+      description: |
+        Retrieves all game sessions that have been played using the specified deck.
       security:
         - bearerAuth: []
       operationId: getAllGameSessions
@@ -837,6 +881,8 @@ paths:
       tags:
         - Game Sessions
       summary: Get details of a specific game session
+      description: |
+        Retrieves details of a specific game session for the specified deck.
       security:
         - bearerAuth: []
       operationId: getGameSessionById
@@ -887,6 +933,9 @@ paths:
       tags:
         - Friends
       summary: Get the list of friends
+      description: |
+        Retrieves the list of friends for the authenticated user.
+        Requires a valid authentication token.
       security:
         - bearerAuth: []
       operationId: getFriends
@@ -917,6 +966,8 @@ paths:
       tags:
         - Friends
       summary: Get the friend details
+      description: |
+        Retrieves detailed information about a specific friend identified by `friendId`.
       security:
         - bearerAuth: []
       operationId: getFriend
@@ -959,6 +1010,8 @@ paths:
       tags:
         - Friends
       summary: Remove a friend
+      description: |
+        Removes a friend from the authenticated user's friend list.
       security:
         - bearerAuth: []
       operationId: deleteFriend
@@ -995,6 +1048,10 @@ paths:
       tags:
         - Friend Invitations
       summary: Send a friend invitation
+      description: |
+        Sends a friend invitation to a user using their email address.
+        The recipient’s email should be provided as a query parameter `recipientEmail`.
+        Requires authentication.
       security:
         - bearerAuth: []
       operationId: sendFriendInvitation
@@ -1022,6 +1079,9 @@ paths:
       tags:
         - Friend Invitations
       summary: Get received friend invitations
+      description: |
+        Retrieves a list of friend invitations received by the authenticated user.
+        Each invitation includes details about the sender and creation time.
       security:
         - bearerAuth: []
       operationId: getReceivedInvitations
@@ -1052,6 +1112,9 @@ paths:
       tags:
         - Friend Invitations
       summary: Get sent friend invitations
+      description: |
+        Retrieves a list of friend invitations sent by the authenticated user.
+        Each invitation includes details about the recipient and creation time.
       security:
         - bearerAuth: []
       operationId: getSentInvitations
@@ -1082,6 +1145,9 @@ paths:
       tags:
         - Friend Invitations
       summary: Respond to a friend invitation
+      description: |
+        Responds to a received friend invitation by updating its status.
+        The new status should be provided as a query parameter.
       security:
         - bearerAuth: []
       operationId: respondToInvitation
