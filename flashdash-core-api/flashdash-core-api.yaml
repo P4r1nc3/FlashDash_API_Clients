@@ -168,6 +168,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserResponse"
+              example:
+                $ref: "#/components/examples/UserResponseExample"
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -1164,6 +1166,61 @@ components:
           type: string
           description: "JWT authentication token."
 
+    UserResponse:
+      type: object
+      description: "Response payload for user details."
+      properties:
+        userId:
+          type: string
+          description: "Id of the user."
+        userFrn:
+          type: string
+          description: "FRN of the user."
+        email:
+          type: string
+          format: email
+          description: "User's email address."
+        username:
+          type: string
+          description: "User's username."
+        firstName:
+          type: string
+          description: "User's first name."
+        lastName:
+          type: string
+          description: "User's last name."
+        createdAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the user account was created."
+        updatedAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the user account was last updated."
+        dailyNotifications:
+          type: integer
+          description: "Number of daily notifications received by the user."
+        gamesPlayed:
+          type: integer
+          description: "Number of games played by the user."
+        points:
+          type: integer
+          description: "Total points earned by the user."
+        streak:
+          type: integer
+          description: "User's current game streak."
+
+    ChangePasswordRequest:
+      type: object
+      description: "Request payload for changing the password."
+      properties:
+        oldPassword:
+          type: string
+          description: "Current password of the user."
+        newPassword:
+          type: string
+          description: "New password for the user."
+
     DeckRequest:
       type: object
       description: "Request payload for creating a new deck."
@@ -1307,50 +1364,6 @@ components:
               userAnswer:
                 type: string
                 description: "The answer given by the user."
-
-    UserResponse:
-      type: object
-      description: "Response payload for user details."
-      properties:
-        userId:
-          type: string
-          description: "Id of the user."
-        userFrn:
-          type: string
-          description: "FRN of the user."
-        email:
-          type: string
-          format: email
-          description: "User's email address."
-        username:
-          type: string
-          description: "User's username."
-        firstName:
-          type: string
-          description: "User's first name."
-        lastName:
-          type: string
-          description: "User's last name."
-        createdAt:
-          type: string
-          format: date-time
-          description: "Timestamp when the user account was created."
-        updatedAt:
-          type: string
-          format: date-time
-          description: "Timestamp when the user account was last updated."
-        dailyNotifications:
-          type: integer
-          description: "Number of daily notifications received by the user."
-        gamesPlayed:
-          type: integer
-          description: "Number of games played by the user."
-        points:
-          type: integer
-          description: "Total points earned by the user."
-        streak:
-          type: integer
-          description: "User's current game streak."
 
     FriendResponse:
       type: object
@@ -1540,6 +1553,11 @@ components:
         gamesPlayed: 120
         points: 4500
         streak: 7
+
+    ChangePasswordRequestExample:
+      value:
+        oldPassword: "OldSecurePass123!"
+        newPassword: "NewStrongerPass456!"
 
     DeckRequestExample:
       value:
