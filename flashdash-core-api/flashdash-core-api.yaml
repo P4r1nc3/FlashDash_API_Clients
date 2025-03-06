@@ -1638,7 +1638,8 @@ components:
 
     GameSessionResponseExample:
       value:
-        gameSessionId: 123
+        gameSessionId: "HOGWNe0tCQurLlbT0CDQXi"
+        gameSessionFrn: "frn:flashdash:game-session:HOGWNe0tCQurLlbT0CDQXi"
         score: 85
         correctAnswers: 17
         totalQuestions: 20
@@ -1647,16 +1648,17 @@ components:
         startTime: "2024-03-10T14:00:00Z"
         endTime: "2024-03-10T14:15:00Z"
         userPerformance:
-          - questionId: 1
+          - questionFrn: "frn:flashdash:question:12345"
             wasCorrect: true
             userAnswer: "Answer A"
-          - questionId: 2
+          - questionFrn: "frn:flashdash:question:67890"
             wasCorrect: false
             userAnswer: "Answer B"
 
     GameSessionResponseListExample:
       value:
-        - gameSessionId: 123
+        - gameSessionId: "HOGWNe0tCQurLlbT0CDQXi"
+          gameSessionFrn: "frn:flashdash:game-session:HOGWNe0tCQurLlbT0CDQXi"
           score: 85
           correctAnswers: 17
           totalQuestions: 20
@@ -1664,7 +1666,8 @@ components:
           accuracy: 85.0
           startTime: "2024-03-10T14:00:00Z"
           endTime: "2024-03-10T14:15:00Z"
-        - gameSessionId: 124
+        - gameSessionId: "ByCPCfpqTKjgaAADYZFHD1"
+          gameSessionFrn: "frn:flashdash:game-session:ByCPCfpqTKjgaAADYZFHD1"
           score: 90
           correctAnswers: 18
           totalQuestions: 20
@@ -1683,7 +1686,6 @@ components:
         gamesPlayed: "43"
         points: "7890"
         streak: "26"
-
 
     FriendListResponseExample:
       value:
@@ -1704,15 +1706,6 @@ components:
           gamesPlayed: "32"
           points: "3890"
           streak: "12"
-
-    UserResponseExample:
-      value:
-        firstName: "John"
-        lastName: "Doe"
-        email: "john.doe@example.com"
-        dailyNotifications: true
-        createdAt: "2024-03-03T12:00:00Z"
-        updatedAt: "2024-03-03T12:30:00Z"
 
     ErrorResponseExample400_AccountAlreadyActivated:
       value:
