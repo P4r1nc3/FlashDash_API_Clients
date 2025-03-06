@@ -177,8 +177,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserResponse"
-              example:
-                $ref: "#/components/examples/UserResponseExample"
+              examples:
+                User response:
+                  $ref: "#/components/examples/UserResponseExample"
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
