@@ -1271,8 +1271,8 @@ components:
           format: date-time
           description: "Timestamp when the user account was last updated."
         dailyNotifications:
-          type: integer
-          description: "Number of daily notifications received by the user."
+          type: boolean
+          description: "Indicates whether daily notifications are enabled for the user."
         gamesPlayed:
           type: integer
           description: "Number of games played by the user."
@@ -1587,7 +1587,7 @@ components:
         lastName: "Doe"
         createdAt: "2023-05-15T10:30:00Z"
         updatedAt: "2024-03-06T08:45:00Z"
-        dailyNotifications: 5
+        dailyNotifications: true
         gamesPlayed: 120
         points: 4500
         streak: 7
