@@ -1034,6 +1034,9 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/FriendInvitationResponseReceived"
+              examples:
+                Friend Invitation Received:
+                  $ref: "#/components/examples/FriendInvitationResponseReceivedExample"
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -1061,6 +1064,9 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/FriendInvitationResponseSent"
+              examples:
+                Friend Invitation Sent:
+                  $ref: "#/components/examples/FriendInvitationResponseSentExample"
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -1401,50 +1407,22 @@ components:
         invitationId:
           type: string
           description: "ID of the friend invitation."
-          example: "EooNUUfHdRXpYY0m00SbaW"
         invitationFrn:
           type: string
           description: "FRN of the friend invitation."
-          example: "frn:flashdash:invitation:EooNUUfHdRXpYY0m00SbaW"
         status:
           type: string
           description: "Current status of the invitation (e.g., PENDING, ACCEPTED, DECLINED)."
-          example: "PENDING"
         createdAt:
           type: string
           format: date-time
           description: "Timestamp when the invitation was created."
-          example: "2025-03-06T00:12:47.645226"
         updatedAt:
           type: string
           format: date-time
           description: "Timestamp when the invitation was last updated."
-          example: "2025-03-06T01:00:00.123456"
         sender:
-          type: object
-          description: "Details of the user who sent the invitation."
-          properties:
-            userId:
-              type: string
-              description: "ID of the sender."
-              example: "ByCPCfpqTKjgaAADYZFHD1"
-            userFrn:
-              type: string
-              description: "FRN of the sender."
-              example: "frn:flashdash:user:ByCPCfpqTKjgaAADYZFHD1"
-            firstName:
-              type: string
-              description: "First name of the sender."
-              example: "John"
-            lastName:
-              type: string
-              description: "Last name of the sender."
-              example: "Doe"
-            email:
-              type: string
-              format: email
-              description: "Email of the sender."
-              example: "johndoe@example.com"
+          $ref: "#/components/schemas/UserSummary"
 
     FriendInvitationResponseSent:
       type: object
@@ -1453,50 +1431,43 @@ components:
         invitationId:
           type: string
           description: "ID of the friend invitation."
-          example: "EooNUUfHdRXpYY0m00SbaW"
         invitationFrn:
           type: string
           description: "FRN of the friend invitation."
-          example: "frn:flashdash:invitation:EooNUUfHdRXpYY0m00SbaW"
         status:
           type: string
           description: "Current status of the invitation (e.g., PENDING, ACCEPTED, DECLINED)."
-          example: "PENDING"
         createdAt:
           type: string
           format: date-time
           description: "Timestamp when the invitation was created."
-          example: "2025-03-06T00:12:47.645226"
         updatedAt:
           type: string
           format: date-time
           description: "Timestamp when the invitation was last updated."
-          example: "2025-03-06T01:00:00.123456"
         recipient:
-          type: object
-          description: "Details of the user who received the invitation."
-          properties:
-            userId:
-              type: string
-              description: "ID of the recipient."
-              example: "HOGWNe0tCQurLlbT0CDQXi"
-            userFrn:
-              type: string
-              description: "FRN of the recipient."
-              example: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
-            firstName:
-              type: string
-              description: "First name of the recipient."
-              example: "Alice"
-            lastName:
-              type: string
-              description: "Last name of the recipient."
-              example: "Smith"
-            email:
-              type: string
-              format: email
-              description: "Email of the recipient."
-              example: "alicesmith@example.com"
+          $ref: "#/components/schemas/UserSummary"
+
+    UserSummary:
+      type: object
+      description: "Summary details of a user (used in friend invitations)."
+      properties:
+        userId:
+          type: string
+          description: "ID of the user."
+        userFrn:
+          type: string
+          description: "FRN of the user."
+        firstName:
+          type: string
+          description: "First name of the user."
+        lastName:
+          type: string
+          description: "Last name of the user."
+        email:
+          type: string
+          format: email
+          description: "Email of the user."
 
     ErrorResponse:
       type: object
@@ -1729,6 +1700,34 @@ components:
           gamesPlayed: "32"
           points: "3890"
           streak: "12"
+
+    FriendInvitationResponseReceivedExample:
+      value:
+        - invitationId: "EooNUUfHdRXpYY0m00SbaW"
+          invitationFrn: "frn:flashdash:invitation:EooNUUfHdRXpYY0m00SbaW"
+          status: "PENDING"
+          createdAt: "2025-03-06T00:12:47.645226"
+          updatedAt: "2025-03-06T01:00:00.123456"
+          sender:
+            userId: "ByCPCfpqTKjgaAADYZFHD1"
+            userFrn: "frn:flashdash:user:ByCPCfpqTKjgaAADYZFHD1"
+            firstName: "John"
+            lastName: "Doe"
+            email: "johndoe@example.com"
+
+    FriendInvitationResponseSentExample:
+      value:
+        - invitationId: "EooNUUfHdRXpYY0m00SbaW"
+          invitationFrn: "frn:flashdash:invitation:EooNUUfHdRXpYY0m00SbaW"
+          status: "PENDING"
+          createdAt: "2025-03-06T00:12:47.645226"
+          updatedAt: "2025-03-06T01:00:00.123456"
+          recipient:
+            userId: "HOGWNe0tCQurLlbT0CDQXi"
+            userFrn: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
+            firstName: "Alice"
+            lastName: "Smith"
+            email: "alicesmith@example.com"
 
     ErrorResponseExample400_AccountAlreadyActivated:
       value:
