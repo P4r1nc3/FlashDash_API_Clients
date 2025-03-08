@@ -14,7 +14,7 @@ info:
     url: https://opensource.org/licenses/MIT
 
 servers:
-  - url: http://localhost:8081
+  - url: http://localhost:7070
     description: Local development server for Activity Logging Service
 
 tags:
