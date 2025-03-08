@@ -1,0 +1,277 @@
+openapi: 3.0.3
+info:
+  title: FlashDash Activity Logging Service API
+  description: |
+    The FlashDash Activity Logging Service is responsible for tracking and logging various 
+    user activities within the FlashDash ecosystem. These activities include account events, 
+    gameplay sessions, deck and question interactions, and friend-related actions.
+    
+    This service enables analytics, auditing, and achievement tracking by providing structured 
+    access to user actions across the platform.
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8081
+    description: Local development server for Activity Logging Service
+
+tags:
+  - name: Activities
+    description: Endpoints for logging and retrieving user activities
+
+paths:
+  /activities:
+    post:
+      tags:
+        - Activities
+      summary: Log a new activity
+      description: |
+        Logs a new activity performed by a user, such as login, deck creation, or game completion.
+      security:
+        - bearerAuth: []
+      operationId: logActivity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LogActivityRequest"
+            examples:
+              Log Activity Request:
+                $ref: "#/components/examples/LogActivityRequestExample"
+      responses:
+        "201":
+          description: Activity successfully logged
+        "400":
+          description: Bad Request - Invalid Input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Invalid Input:
+                  $ref: "#/components/examples/ErrorResponseExample400_BadRequest"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
+    get:
+      tags:
+        - Activities
+      summary: Get all activities for the authenticated user
+      description: |
+        Retrieves a list of all activities performed by the authenticated user.
+      security:
+        - bearerAuth: []
+      operationId: getUserActivities
+      responses:
+        "200":
+          description: List of user activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ActivityResponse"
+              examples:
+                User Activities:
+                  $ref: "#/components/examples/ActivityListResponseExample"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
+  /activities/type/{activityType}:
+    get:
+      tags:
+        - Activities
+      summary: Get activities by type
+      description: |
+        Retrieves a list of activities filtered by type (e.g., only logins, only deck creations).
+      security:
+        - bearerAuth: []
+      operationId: getActivitiesByType
+      parameters:
+        - name: activityType
+          in: path
+          required: true
+          schema:
+            type: string
+            enum:
+              - ACCOUNT_REGISTRATION
+              - ACCOUNT_CONFIRMATION
+              - ACCOUNT_LOGIN
+              - ACCOUNT_UPDATED
+              - ACCOUNT_DELETED
+              - GAME_STARTED
+              - GAME_FINISHED
+              - DECK_CREATED
+              - DECK_UPDATED
+              - DECK_DELETED
+              - QUESTION_CREATED
+              - QUESTION_UPDATED
+              - QUESTION_DELETED
+              - FRIEND_INVITE_SENT
+              - FRIEND_INVITE_RESPONDED
+              - FRIEND_DELETED
+      responses:
+        "200":
+          description: List of activities of the specified type
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ActivityResponse"
+              examples:
+                Activity List:
+                  $ref: "#/components/examples/ActivityListResponseExample"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "Authentication scheme using Bearer token with JWT."
+
+  schemas:
+    LogActivityRequest:
+      type: object
+      description: "Request payload for logging a new activity."
+      properties:
+        userFrn:
+          type: string
+          description: "FRN of the user performing the action."
+        targetFrn:
+          type: string
+          description: "FRN of the target entity (e.g., deck, friend, game session)."
+        activityType:
+          type: string
+          enum:
+            - ACCOUNT_REGISTRATION
+            - ACCOUNT_CONFIRMATION
+            - ACCOUNT_LOGIN
+            - ACCOUNT_UPDATED
+            - ACCOUNT_DELETED
+            - GAME_STARTED
+            - GAME_FINISHED
+            - DECK_CREATED
+            - DECK_UPDATED
+            - DECK_DELETED
+            - QUESTION_CREATED
+            - QUESTION_UPDATED
+            - QUESTION_DELETED
+            - FRIEND_INVITE_SENT
+            - FRIEND_INVITE_RESPONDED
+            - FRIEND_DELETED
+          description: "Type of activity being logged."
+
+    ActivityResponse:
+      type: object
+      description: "Response payload for an activity log."
+      properties:
+        activityId:
+          type: string
+          description: "ID of the activity log."
+        activityFrn:
+          type: string
+          description: "FRN of the activity log."
+        userFrn:
+          type: string
+          description: "FRN of the user who performed the action."
+        targetFrn:
+          type: string
+          description: "FRN of the target entity related to the activity."
+        activityType:
+          type: string
+          description: "Type of activity."
+        createdAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the activity was logged."
+        updatedAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the activity was last updated."
+
+    ErrorResponse:
+      type: object
+      description: "Error response structure."
+      properties:
+        status:
+          type: integer
+          description: "HTTP status code of the error."
+        error:
+          type: string
+          description: "Error message."
+        cause:
+          type: string
+          description: "Cause of the error."
+        action:
+          type: string
+          description: "Suggested action to resolve the error."
+        timestamp:
+          type: string
+          format: date-time
+          description: "Time when the error occurred."
+        correlationId:
+          type: string
+          description: "Unique identifier for tracking the error."
+
+  examples:
+    LogActivityRequestExample:
+      value:
+        userFrn: "frn:flashdash:user:123456"
+        targetFrn: "frn:flashdash:deck:654321"
+        activityType: "DECK_CREATED"
+
+    ActivityListResponseExample:
+      value:
+        - activityId: "1"
+          activityFrn: "frn:flashdash:activity:987654"
+          userFrn: "frn:flashdash:user:123456"
+          targetFrn: "frn:flashdash:deck:654321"
+          activityType: "DECK_CREATED"
+          createdAt: "2025-03-06T10:00:00Z"
+          updatedAt: "2025-03-06T12:00:00Z"
+
+    ErrorResponseExample400_BadRequest:
+      value:
+        status: 400
+        error: "E400001"
+        cause: "Invalid request data"
+        action: "Ensure that all required fields are provided"
+        timestamp: "2025-03-06T12:00:00Z"
+        correlationId: "a1b2c3d4"
+
+    ErrorResponseExample401_TokenMissingOrInvalid:
+      value:
+        status: 401
+        error: "E401001"
+        cause: "Token is missing or invalid"
+        action: "Provide a valid authentication token"
+        timestamp: "2025-03-06T12:10:00Z"
+        correlationId: "d4e5f6g7"
