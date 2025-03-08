@@ -19,7 +19,7 @@ tags:
     description: Endpoints for sending email notifications to users.
 
 paths:
-  /notifications/email/confirm-account:
+  /notifications/confirm-account:
     post:
       tags:
         - Email Notifications
@@ -51,7 +51,7 @@ paths:
                 Invalid Input:
                   $ref: "#/components/examples/ErrorResponseExample400_BadRequest"
 
-  /notifications/email/friend-invite:
+  /notifications/friend-invite:
     post:
       tags:
         - Email Notifications
@@ -61,8 +61,6 @@ paths:
       security:
         - bearerAuth: []
       operationId: sendFriendInviteEmail
-      requestBody:
-        required: true
       responses:
         "202":
           description: Friend invitation email sent successfully
