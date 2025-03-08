@@ -1,0 +1,165 @@
+openapi: 3.0.3
+info:
+  title: FlashDash Notification Service API
+  description: |
+    The FlashDash Notification Service API manages the sending of email notifications 
+    and in-app notifications for users. The service handles email confirmations, 
+    friend invitations, and daily reminder notifications.
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:9090
+    description: Local development server for Notification Service
+
+tags:
+  - name: Email Notifications
+    description: Endpoints for sending email notifications to users.
+
+paths:
+  /notifications/confirm-account:
+    post:
+      tags:
+        - Email Notifications
+      summary: Send account confirmation email
+      description: |
+        Sends an email to the user with a confirmation link for activating their account.
+      security:
+        - bearerAuth: []
+      operationId: sendAccountConfirmationEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountConfirmationRequest"
+            examples:
+              Account Confirmation:
+                $ref: "#/components/examples/AccountConfirmationExample"
+      responses:
+        "202":
+          description: Confirmation email sent successfully
+        "400":
+          description: Bad Request - Invalid Input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Invalid Input:
+                  $ref: "#/components/examples/ErrorResponseExample400_BadRequest"
+
+  /notifications/friend-invite:
+    post:
+      tags:
+        - Email Notifications
+      summary: Send friend invitation email
+      description: |
+        Sends an email notification to a user when they receive a friend invitation.
+      security:
+        - bearerAuth: []
+      operationId: sendFriendInviteEmail
+      responses:
+        "202":
+          description: Friend invitation email sent successfully
+        "400":
+          description: Bad Request - Invalid Input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Invalid Input:
+                  $ref: "#/components/examples/ErrorResponseExample400_BadRequest"
+
+  /notifications/daily/enable:
+    post:
+      tags:
+        - Email Notifications
+      summary: Enable daily notifications
+      description: |
+        Enables daily notifications for the authenticated user.
+        The service will send daily reminders at a fixed time.
+      security:
+        - bearerAuth: []
+      operationId: enableDailyNotifications
+      responses:
+        "200":
+          description: Daily notifications enabled successfully
+
+  /notifications/daily/disable:
+    post:
+      tags:
+        - Email Notifications
+      summary: Disable daily notifications
+      description: |
+        Disables daily notifications for the authenticated user.
+      security:
+        - bearerAuth: []
+      operationId: disableDailyNotifications
+      responses:
+        "200":
+          description: Daily notifications disabled successfully
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "Authentication scheme using Bearer token with JWT."
+
+  schemas:
+    AccountConfirmationRequest:
+      type: object
+      description: "Request payload for sending an account confirmation email."
+      properties:
+        email:
+          type: string
+          format: email
+          description: "Email address of the user."
+        confirmationLink:
+          type: string
+          format: uri
+          description: "Unique confirmation link for activating the account."
+
+    ErrorResponse:
+      type: object
+      description: "Error response structure."
+      properties:
+        status:
+          type: integer
+          description: "HTTP status code of the error."
+        error:
+          type: string
+          description: "Error message."
+        cause:
+          type: string
+          description: "Cause of the error."
+        action:
+          type: string
+          description: "Suggested action to resolve the error."
+        timestamp:
+          type: string
+          format: date-time
+          description: "Time when the error occurred."
+        correlationId:
+          type: string
+          description: "Unique identifier for tracking the error."
+
+  examples:
+    AccountConfirmationExample:
+      value:
+        email: "user@example.com"
+        confirmationLink: "https://flashdash.com/confirm?token=abc123"
+
+    ErrorResponseExample400_BadRequest:
+      value:
+        status: 400
+        error: "E400001"
+        cause: "Invalid request data"
+        action: "Ensure that all required fields are provided"
+        timestamp: "2025-03-06T12:00:00Z"
+        correlationId: "a1b2c3d4"

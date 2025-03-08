@@ -11,6 +11,7 @@
   <modules>
     <module>flashdash-core-api</module>
     <module>flashdash-activity-api</module>
+    <module>flashdash-notification-api</module>
   </modules>
 
   <distributionManagement>
