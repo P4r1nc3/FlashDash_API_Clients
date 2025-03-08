@@ -162,9 +162,6 @@ components:
       type: object
       description: "Request payload for logging a new activity."
       properties:
-        userFrn:
-          type: string
-          description: "FRN of the user performing the action."
         targetFrn:
           type: string
           description: "FRN of the target entity (e.g., deck, friend, game session)."
@@ -244,13 +241,12 @@ components:
   examples:
     LogActivityRequestExample:
       value:
-        userFrn: "frn:flashdash:user:123456"
         targetFrn: "frn:flashdash:deck:654321"
         activityType: "DECK_CREATED"
 
     ActivityListResponseExample:
       value:
-        - activityId: "1"
+        - activityId: "987654"
           activityFrn: "frn:flashdash:activity:987654"
           userFrn: "frn:flashdash:user:123456"
           targetFrn: "frn:flashdash:deck:654321"
