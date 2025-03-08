@@ -5,7 +5,7 @@ info:
     The FlashDash Activity Logging Service is responsible for tracking and logging various 
     user activities within the FlashDash ecosystem. These activities include account events, 
     gameplay sessions, deck and question interactions, and friend-related actions.
-    
+
     This service enables analytics, auditing, and achievement tracking by providing structured 
     access to user actions across the platform.
   version: 1.0.0
