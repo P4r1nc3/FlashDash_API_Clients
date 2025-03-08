@@ -168,7 +168,7 @@ paths:
       description: |
         Retrieves details of the authenticated user.
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: getUser
       responses:
         "200":
@@ -197,7 +197,7 @@ paths:
       description: |
         Deletes the authenticated user's account.
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: deleteUser
       responses:
         "204":
@@ -219,7 +219,7 @@ paths:
       description: |
         Changes the authenticated user's password.
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: changePassword
       requestBody:
         required: true
@@ -1377,7 +1377,7 @@ components:
           description: "List of incorrect answers."
         difficulty:
           type: string
-          enum: [ easy, medium, hard ]
+          enum: [easy, medium, hard]
           description: "Difficulty level of the question."
         createdAt:
           type: string

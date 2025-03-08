@@ -10,6 +10,7 @@
 
   <modules>
     <module>flashdash-core-api</module>
+    <module>flashdash-activity-api</module>
   </modules>
 
   <distributionManagement>
