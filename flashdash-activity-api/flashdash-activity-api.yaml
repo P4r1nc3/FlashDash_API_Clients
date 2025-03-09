@@ -20,8 +20,6 @@ servers:
 tags:
   - name: Activities
     description: Endpoints for logging and retrieving user activities
-  - name: Statistics
-    description: Endpoints for retrieving user activity statistics
 
 paths:
   /activities:
@@ -151,10 +149,10 @@ paths:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
-  /statistics:
+  /activities/statistics:
     get:
       tags:
-        - Statistics
+        - Activities
       summary: Get user activity statistics
       description: |
         Retrieves various statistics related to the authenticated user's activities, such as:
@@ -172,10 +170,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserStatisticsResponse"
+                $ref: "#/components/schemas/ActivityStatisticsResponse"
               examples:
                 User statistics:
-                  $ref: "#/components/examples/UserStatisticsExample"
+                  $ref: "#/components/examples/ActivityStatisticsExample"
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -251,7 +249,7 @@ components:
           format: date-time
           description: "Timestamp when the activity was last updated."
 
-    UserStatisticsResponse:
+    ActivityStatisticsResponse:
       type: object
       description: "Statistics related to a user's activities."
       properties:
@@ -311,7 +309,7 @@ components:
           createdAt: "2025-03-06T10:00:00Z"
           updatedAt: "2025-03-06T12:00:00Z"
 
-    UserStatisticsExample:
+    ActivityStatisticsExample:
       value:
         currentStreak: 5
         totalGamesPlayed: 20
