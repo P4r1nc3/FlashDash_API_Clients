@@ -20,6 +20,8 @@ servers:
 tags:
   - name: Activities
     description: Endpoints for logging and retrieving user activities
+  - name: Statistics
+    description: Endpoints for retrieving user activity statistics
 
 paths:
   /activities:
@@ -102,7 +104,7 @@ paths:
       description: |
         Retrieves a list of activities filtered by type (e.g., only logins, only deck creations).
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: getActivitiesByType
       parameters:
         - name: activityType
@@ -139,6 +141,41 @@ paths:
               examples:
                 Activity List:
                   $ref: "#/components/examples/ActivityListResponseExample"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
+  /statistics:
+    get:
+      tags:
+        - Statistics
+      summary: Get user activity statistics
+      description: |
+        Retrieves various statistics related to the authenticated user's activities, such as:
+        - Current streak (number of consecutive days of activity)
+        - Total games played
+        - Total decks created
+        - Total questions created
+        - Total friends added
+      security:
+        - bearerAuth: []
+      operationId: getUserStatistics
+      responses:
+        "200":
+          description: User activity statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserStatisticsResponse"
+              examples:
+                User statistics:
+                  $ref: "#/components/examples/UserStatisticsExample"
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -214,6 +251,26 @@ components:
           format: date-time
           description: "Timestamp when the activity was last updated."
 
+    UserStatisticsResponse:
+      type: object
+      description: "Statistics related to a user's activities."
+      properties:
+        currentStreak:
+          type: integer
+          description: "Number of consecutive days of activity."
+        totalGamesPlayed:
+          type: integer
+          description: "Total number of games played."
+        totalDecksCreated:
+          type: integer
+          description: "Total number of decks created."
+        totalQuestionsCreated:
+          type: integer
+          description: "Total number of questions created."
+        totalFriendsAdded:
+          type: integer
+          description: "Total number of friends added."
+
     ErrorResponse:
       type: object
       description: "Error response structure."
@@ -253,6 +310,14 @@ components:
           activityType: "DECK_CREATED"
           createdAt: "2025-03-06T10:00:00Z"
           updatedAt: "2025-03-06T12:00:00Z"
+
+    UserStatisticsExample:
+      value:
+        currentStreak: 5
+        totalGamesPlayed: 20
+        totalDecksCreated: 4
+        totalQuestionsCreated: 45
+        totalFriendsAdded: 3
 
     ErrorResponseExample400_BadRequest:
       value:
