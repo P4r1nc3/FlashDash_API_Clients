@@ -27,29 +27,27 @@ paths:
       description: |
         Sends an email to the user with a confirmation link for activating their account.
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: sendAccountConfirmationEmail
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/AccountConfirmationRequest"
-            examples:
-              Account Confirmation:
-                $ref: "#/components/examples/AccountConfirmationExample"
+      parameters:
+        - name: token
+          in: query
+          required: true
+          schema:
+            type: string
+          description: "Account confirmation token to be included in the verification link."
       responses:
         "202":
           description: Confirmation email sent successfully
-        "400":
-          description: Bad Request - Invalid Input
+        "401":
+          description: Unauthorized - Token Missing or Invalid
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Invalid Input:
-                  $ref: "#/components/examples/ErrorResponseExample400_BadRequest"
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /notifications/friend-invite:
     post:
@@ -64,15 +62,15 @@ paths:
       responses:
         "202":
           description: Friend invitation email sent successfully
-        "400":
-          description: Bad Request - Invalid Input
+        "401":
+          description: Unauthorized - Token Missing or Invalid
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               examples:
-                Invalid Input:
-                  $ref: "#/components/examples/ErrorResponseExample400_BadRequest"
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /notifications/daily/enable:
     post:
@@ -88,6 +86,15 @@ paths:
       responses:
         "200":
           description: Daily notifications enabled successfully
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /notifications/daily/disable:
     post:
@@ -102,6 +109,15 @@ paths:
       responses:
         "200":
           description: Daily notifications disabled successfully
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
 components:
   securitySchemes:
@@ -112,19 +128,6 @@ components:
       description: "Authentication scheme using Bearer token with JWT."
 
   schemas:
-    AccountConfirmationRequest:
-      type: object
-      description: "Request payload for sending an account confirmation email."
-      properties:
-        email:
-          type: string
-          format: email
-          description: "Email address of the user."
-        confirmationLink:
-          type: string
-          format: uri
-          description: "Unique confirmation link for activating the account."
-
     ErrorResponse:
       type: object
       description: "Error response structure."
@@ -150,16 +153,11 @@ components:
           description: "Unique identifier for tracking the error."
 
   examples:
-    AccountConfirmationExample:
+    ErrorResponseExample401_TokenMissingOrInvalid:
       value:
-        email: "user@example.com"
-        confirmationLink: "https://flashdash.com/confirm?token=abc123"
-
-    ErrorResponseExample400_BadRequest:
-      value:
-        status: 400
-        error: "E400001"
-        cause: "Invalid request data"
-        action: "Ensure that all required fields are provided"
-        timestamp: "2025-03-06T12:00:00Z"
-        correlationId: "a1b2c3d4"
+        status: 401
+        error: "E401001"
+        cause: "Token is missing or invalid"
+        action: "Provide a valid authentication token"
+        timestamp: "2025-03-06T12:10:00Z"
+        correlationId: "d4e5f6g7"
