@@ -27,7 +27,7 @@ paths:
       description: |
         Sends an email to the user with a confirmation link for activating their account.
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: sendAccountConfirmationEmail
       parameters:
         - name: token
