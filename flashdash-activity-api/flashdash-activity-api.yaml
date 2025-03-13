@@ -104,7 +104,7 @@ paths:
       description: |
         Retrieves a list of activities filtered by type (e.g., only logins, only deck creations).
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: getActivitiesByType
       parameters:
         - name: activityType
@@ -194,7 +194,7 @@ paths:
       description: |
         Retrieves all achievements unlocked by the authenticated user.
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: getUserAchievements
       responses:
         "200":
@@ -226,7 +226,7 @@ paths:
       description: |
         Retrieves detailed information about a specific achievement using its unique FRN (Fully Qualified Resource Name).
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: getAchievementByFrn
       parameters:
         - name: achievementFrn

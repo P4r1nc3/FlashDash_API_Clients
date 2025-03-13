@@ -796,10 +796,10 @@ paths:
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/QuestionRequest"
+                $ref: "#/components/schemas/GameSessionResponse"
             examples:
               Question List Request:
-                $ref: "#/components/examples/QuestionListRequestExample"
+                $ref: "#/components/examples/GameSessionResponseExample"
       responses:
         "200":
           description: Game session ended, returning results
@@ -1423,39 +1423,37 @@ components:
           type: string
           format: date-time
           description: "Timestamp when the session ended."
-        userPerformance:
+        sessionDetails:
           type: array
           description: "Detailed breakdown of the user's performance."
           items:
-            type: object
-            properties:
-              questionId:
-                type: string
-                description: "Id of the question."
-              questionFrn:
-                type: string
-                description: "FRN of the question."
-              questionText:
-                type: string
-                description: "Text of the question."
-              correctAnswers:
-                type: array
-                items:
-                  type: string
-                description: "List of correct answers for this question."
-              incorrectAnswers:
-                type: array
-                items:
-                  type: string
-                description: "List of incorrect answers available in the question."
-              userAnswers:
-                type: array
-                items:
-                  type: string
-                description: "List of answers provided by the user."
-              wasCorrect:
-                type: boolean
-                description: "Indicates whether the user answered correctly."
+            $ref: "#/components/schemas/GameSessionDetailsResponse"
+
+    GameSessionDetailsResponse:
+      type: object
+      description: "Detailed breakdown of a user's performance on a specific question."
+      properties:
+        questionText:
+          type: string
+          description: "Text of the question."
+        correctAnswers:
+          type: array
+          items:
+            type: string
+          description: "List of correct answers for this question."
+        incorrectAnswers:
+          type: array
+          items:
+            type: string
+          description: "List of incorrect answers available in the question."
+        userAnswers:
+          type: array
+          items:
+            type: string
+          description: "List of answers provided by the user."
+        wasCorrect:
+          type: boolean
+          description: "Indicates whether the user answered correctly."
 
     FriendResponse:
       type: object
@@ -1728,20 +1726,16 @@ components:
         accuracy: 85.0
         startTime: "2024-03-10T14:00:00Z"
         endTime: "2024-03-10T14:15:30Z"
-        userPerformance:
-          - questionId: "12345"
-            questionFrn: "frn:flashdash:question:12345"
-            questionText: "What is the capital of France?"
-            correctAnswers: [ "Paris" ]
-            incorrectAnswers: [ "London", "Berlin", "Madrid" ]
-            userAnswers: [ "Paris" ]
+        sessionDetails:
+          - questionText: "What is the capital of France?"
+            correctAnswers: ["Paris"]
+            incorrectAnswers: ["London", "Berlin", "Madrid"]
+            userAnswers: ["Paris"]
             wasCorrect: true
-          - questionId: "67890"
-            questionFrn: "frn:flashdash:question:67890"
-            questionText: "Which planet is known as the Red Planet?"
-            correctAnswers: [ "Mars" ]
-            incorrectAnswers: [ "Venus", "Jupiter", "Saturn" ]
-            userAnswers: [ "Venus" ]
+          - questionText: "Which planet is known as the Red Planet?"
+            correctAnswers: ["Mars"]
+            incorrectAnswers: ["Venus", "Jupiter", "Saturn"]
+            userAnswers: ["Venus"]
             wasCorrect: false
 
     GameSessionResponseListExample:
@@ -1755,13 +1749,11 @@ components:
           accuracy: 85.0
           startTime: "2024-03-10T14:00:00Z"
           endTime: "2024-03-10T14:15:30Z"
-          userPerformance:
-            - questionId: "12345"
-              questionFrn: "frn:flashdash:question:12345"
-              questionText: "What is the capital of France?"
-              correctAnswers: [ "Paris" ]
-              incorrectAnswers: [ "London", "Berlin", "Madrid" ]
-              userAnswers: [ "Paris" ]
+          sessionDetails:
+            - questionText: "What is the capital of France?"
+              correctAnswers: ["Paris"]
+              incorrectAnswers: ["London", "Berlin", "Madrid"]
+              userAnswers: ["Paris"]
               wasCorrect: true
         - gameSessionId: "ByCPCfpqTKjgaAADYZFHD1"
           gameSessionFrn: "frn:flashdash:game-session:ByCPCfpqTKjgaAADYZFHD1"
@@ -1772,13 +1764,11 @@ components:
           accuracy: 90.0
           startTime: "2024-03-11T14:00:00Z"
           endTime: "2024-03-11T14:10:45Z"
-          userPerformance:
-            - questionId: "54321"
-              questionFrn: "frn:flashdash:question:54321"
-              questionText: "What is 5 + 7?"
-              correctAnswers: [ "12" ]
-              incorrectAnswers: [ "10", "11", "13" ]
-              userAnswers: [ "12" ]
+          sessionDetails:
+            - questionText: "What is 5 + 7?"
+              correctAnswers: ["12"]
+              incorrectAnswers: ["10", "11", "13"]
+              userAnswers: ["12"]
               wasCorrect: true
 
     FriendResponseExample:
