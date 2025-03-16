@@ -15,16 +15,16 @@ servers:
     description: Local development server for Notification Service
 
 tags:
-  - name: User Subscription
+  - name: Subscribers
     description: Endpoints for managing user subscription to notifications.
-  - name: Email Notifications
+  - name: Notifications
     description: Endpoints for sending email notifications to users.
 
 paths:
   /subscribers:
     post:
       tags:
-        - User Subscription
+        - Subscribers
       summary: Register the authenticated user for notifications
       description: |
         Registers the user in the notification service based on authentication token.
@@ -56,7 +56,7 @@ paths:
 
     get:
       tags:
-        - User Subscription
+        - Subscribers
       summary: Retrieve the authenticated user's subscription details
       description: |
         Fetches the subscription details of the authenticated user.
@@ -94,7 +94,7 @@ paths:
 
     delete:
       tags:
-        - User Subscription
+        - Subscribers
       summary: Unregister the authenticated user
       description: |
         Deletes the user's subscription from the notification service.
@@ -126,7 +126,7 @@ paths:
   /notifications/confirm-account:
     post:
       tags:
-        - Email Notifications
+        - Notifications
       summary: Send account confirmation email
       description: |
         Sends an email to the user with a confirmation link for activating their account.
@@ -156,7 +156,7 @@ paths:
   /notifications/friend-invite:
     post:
       tags:
-        - Email Notifications
+        - Notifications
       summary: Send friend invitation email
       description: |
         Sends an email notification to a user when they receive a friend invitation.
@@ -179,7 +179,7 @@ paths:
   /notifications/daily/enable:
     post:
       tags:
-        - Email Notifications
+        - Notifications
       summary: Enable daily notifications
       description: |
         Enables daily notifications for the authenticated user.
@@ -203,7 +203,7 @@ paths:
   /notifications/daily/disable:
     post:
       tags:
-        - Email Notifications
+        - Notifications
       summary: Disable daily notifications
       description: |
         Disables daily notifications for the authenticated user.
