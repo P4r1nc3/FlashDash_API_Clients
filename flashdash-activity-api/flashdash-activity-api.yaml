@@ -22,6 +22,8 @@ tags:
     description: Endpoints for logging and retrieving user activities
   - name: Achievements
     description: Endpoint for retrieving user achievements
+  - name: Leaderboards
+    description: Endpoints for retrieving user rankings based on different criteria
 
 paths:
   /activities:
@@ -264,6 +266,77 @@ paths:
                 Achievement Not Found:
                   $ref: "#/components/examples/ErrorResponseExample404_AchievementNotFoundExample"
 
+  /leaderboards:
+    get:
+      tags:
+        - Leaderboards
+      summary: Get global or filtered user leaderboards
+      description: |
+        Retrieves a global or filtered leaderboard of users based on different ranking criteria. 
+        If a list of included users (userFrn values) is provided, the ranking is limited to those users.
+      security:
+        - bearerAuth: []
+      operationId: getLeaderboards
+      parameters:
+        - name: criteria
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - currentStreak
+              - totalGamesPlayed
+              - totalDecksCreated
+              - totalQuestionsCreated
+              - totalFriendsAdded
+          description: "The ranking criteria for sorting the leaderboard."
+        - name: includedUsers
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          description: "A list of userFrn values representing users to be included in the ranking. If not provided, returns a global ranking."
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+          description: "The number of top users to retrieve."
+      responses:
+        "200":
+          description: List of top users based on the selected criteria (global or filtered)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LeaderboardEntry"
+              examples:
+                Leaderboard Response:
+                  $ref: "#/components/examples/LeaderboardResponseExample"
+
+        "400":
+          description: Bad Request - Invalid criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Invalid Leaderboard Criteria:
+                  $ref: "#/components/examples/ErrorResponseExample400_BadRequest"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
 components:
   securitySchemes:
     bearerAuth:
@@ -273,34 +346,6 @@ components:
       description: "Authentication scheme using Bearer token with JWT."
 
   schemas:
-    LogActivityRequest:
-      type: object
-      description: "Request payload for logging a new activity."
-      properties:
-        targetFrn:
-          type: string
-          description: "FRN of the target entity (e.g., deck, friend, game session)."
-        activityType:
-          type: string
-          enum:
-            - ACCOUNT_REGISTRATION
-            - ACCOUNT_CONFIRMATION
-            - ACCOUNT_LOGIN
-            - ACCOUNT_UPDATED
-            - ACCOUNT_DELETED
-            - GAME_STARTED
-            - GAME_FINISHED
-            - DECK_CREATED
-            - DECK_UPDATED
-            - DECK_DELETED
-            - QUESTION_CREATED
-            - QUESTION_UPDATED
-            - QUESTION_DELETED
-            - FRIEND_INVITE_SENT
-            - FRIEND_INVITE_RESPONDED
-            - FRIEND_DELETED
-          description: "Type of activity being logged."
-
     ActivityResponse:
       type: object
       description: "Response payload for an activity log."
@@ -385,6 +430,48 @@ components:
           format: date-time
           description: "The timestamp when the achievement was unlocked."
 
+    LogActivityRequest:
+      type: object
+      description: "Request payload for logging a new activity."
+      properties:
+        targetFrn:
+          type: string
+          description: "FRN of the target entity (e.g., deck, friend, game session)."
+        activityType:
+          type: string
+          enum:
+            - ACCOUNT_REGISTRATION
+            - ACCOUNT_CONFIRMATION
+            - ACCOUNT_LOGIN
+            - ACCOUNT_UPDATED
+            - ACCOUNT_DELETED
+            - GAME_STARTED
+            - GAME_FINISHED
+            - DECK_CREATED
+            - DECK_UPDATED
+            - DECK_DELETED
+            - QUESTION_CREATED
+            - QUESTION_UPDATED
+            - QUESTION_DELETED
+            - FRIEND_INVITE_SENT
+            - FRIEND_INVITE_RESPONDED
+            - FRIEND_DELETED
+          description: "Type of activity being logged."
+
+    LeaderboardEntry:
+      type: object
+      description: "Represents a leaderboard entry for a user."
+      properties:
+        rank:
+          type: integer
+          description: "The rank position of the user in the leaderboard."
+        userFrn:
+          type: string
+          description: "The unique identifier of the user."
+        score:
+          type: integer
+          description: "The user's score based on the selected ranking criteria."
+
     ErrorResponse:
       type: object
       description: "Error response structure."
@@ -410,11 +497,6 @@ components:
           description: "Unique identifier for tracking the error."
 
   examples:
-    LogActivityRequestExample:
-      value:
-        targetFrn: "frn:flashdash:deck:654321"
-        activityType: "DECK_CREATED"
-
     ActivityListResponseExample:
       value:
         - activityId: "987654"
@@ -463,6 +545,23 @@ components:
           requiredCount: 50
           description: "Play a specified number of games."
           achievedAt: "2025-03-09T12:45:00"
+
+    LogActivityRequestExample:
+      value:
+        targetFrn: "frn:flashdash:deck:654321"
+        activityType: "DECK_CREATED"
+
+    LeaderboardResponseExample:
+      value:
+        - rank: 1
+          userFrn: "frn:flashdash:user:111111"
+          score: 25
+        - rank: 2
+          userFrn: "frn:flashdash:user:222222"
+          score: 20
+        - rank: 3
+          userFrn: "frn:flashdash:user:333333"
+          score: 15
 
     ErrorResponseExample400_BadRequest:
       value:
