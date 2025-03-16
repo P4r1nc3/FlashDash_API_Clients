@@ -15,10 +15,84 @@ servers:
     description: Local development server for Notification Service
 
 tags:
+  - name: User Management
+    description: Endpoints for managing user subscription to notifications.
   - name: Email Notifications
     description: Endpoints for sending email notifications to users.
 
 paths:
+  /notifications/register:
+    post:
+      tags:
+        - User Management
+      summary: Register a user for notifications
+      description: |
+        Registers a user in the notification service. 
+        The user will start receiving daily notifications by default.
+      security:
+        - bearerAuth: [ ]
+      operationId: registerUser
+      parameters:
+        - name: userFrn
+          in: query
+          required: true
+          schema:
+            type: string
+          description: "Unique user identifier."
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+          description: "User's email address for receiving notifications."
+      responses:
+        "201":
+          description: User successfully registered.
+        "400":
+          description: User already registered or invalid request.
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
+  /notifications/unregister:
+    delete:
+      tags:
+        - User Management
+      summary: Unregister a user from notifications
+      description: |
+        Removes a user from the notification service. 
+        The user will no longer receive notifications.
+      security:
+        - bearerAuth: [ ]
+      operationId: unregisterUser
+      parameters:
+        - name: userFrn
+          in: query
+          required: true
+          schema:
+            type: string
+          description: "Unique user identifier to be removed from notifications."
+      responses:
+        "204":
+          description: User successfully unregistered.
+        "400":
+          description: User not found or invalid request.
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
   /notifications/confirm-account:
     post:
       tags:
@@ -38,7 +112,7 @@ paths:
           description: "Account confirmation token to be included in the verification link."
       responses:
         "202":
-          description: Confirmation email sent successfully
+          description: Confirmation email sent
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -61,7 +135,7 @@ paths:
       operationId: sendFriendInviteEmail
       responses:
         "202":
-          description: Friend invitation email sent successfully
+          description: Friend invitation email sent
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
