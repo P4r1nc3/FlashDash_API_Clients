@@ -15,41 +15,26 @@ servers:
     description: Local development server for Notification Service
 
 tags:
-  - name: User Management
+  - name: User Subscription
     description: Endpoints for managing user subscription to notifications.
   - name: Email Notifications
     description: Endpoints for sending email notifications to users.
 
 paths:
-  /notifications/register:
+  /subscribers:
     post:
       tags:
-        - User Management
-      summary: Register a user for notifications
+        - User Subscription
+      summary: Register the authenticated user for notifications
       description: |
-        Registers a user in the notification service. 
+        Registers the user in the notification service based on authentication token.
         The user will start receiving daily notifications by default.
       security:
-        - bearerAuth: [ ]
-      operationId: registerUser
-      parameters:
-        - name: userFrn
-          in: query
-          required: true
-          schema:
-            type: string
-          description: "Unique user identifier."
-        - name: email
-          in: query
-          required: true
-          schema:
-            type: string
-          description: "User's email address for receiving notifications."
+        - bearerAuth: []
+      operationId: registerSubscriber
       responses:
         "201":
           description: User successfully registered.
-        "400":
-          description: User already registered or invalid request.
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -59,30 +44,66 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "409":
+          description: User already registered.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                User Already Registered:
+                  $ref: "#/components/examples/ErrorResponseExample409_UserAlreadyRegistered"
 
-  /notifications/unregister:
+    get:
+      tags:
+        - User Subscription
+      summary: Retrieve the authenticated user's subscription details
+      description: |
+        Fetches the subscription details of the authenticated user.
+      security:
+        - bearerAuth: []
+      operationId: getSubscriber
+      responses:
+        "200":
+          description: Subscription details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationSubscriber"
+              example:
+                Subscriber response:
+                  $ref: "#/components/examples/SubscriberResponseExample"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: User is not subscribed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                User Not Subscribed:
+                  $ref: "#/components/examples/ErrorResponseExample404_UserNotFound"
+
     delete:
       tags:
-        - User Management
-      summary: Unregister a user from notifications
+        - User Subscription
+      summary: Unregister the authenticated user
       description: |
-        Removes a user from the notification service. 
-        The user will no longer receive notifications.
+        Deletes the user's subscription from the notification service.
       security:
-        - bearerAuth: [ ]
-      operationId: unregisterUser
-      parameters:
-        - name: userFrn
-          in: query
-          required: true
-          schema:
-            type: string
-          description: "Unique user identifier to be removed from notifications."
+        - bearerAuth: []
+      operationId: unregisterSubscriber
       responses:
         "204":
           description: User successfully unregistered.
-        "400":
-          description: User not found or invalid request.
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -92,6 +113,15 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: User is not subscribed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                User Not Subscribed:
+                  $ref: "#/components/examples/ErrorResponseExample404_UserNotFound"
 
   /notifications/confirm-account:
     post:
@@ -202,6 +232,27 @@ components:
       description: "Authentication scheme using Bearer token with JWT."
 
   schemas:
+    NotificationSubscriber:
+      type: object
+      properties:
+        userFrn:
+          type: string
+          description: "Unique identifier for the user."
+        email:
+          type: string
+          description: "User's email address for receiving notifications."
+        notificationTime:
+          type: string
+          format: time
+          description: "Time when the user prefers to receive notifications."
+        dailyNotifications:
+          type: boolean
+          description: "Indicates if the user is subscribed to daily notifications."
+        notificationChannel:
+          type: string
+          enum: [EMAIL]
+          description: "Notification delivery channel."
+
     ErrorResponse:
       type: object
       description: "Error response structure."
@@ -227,6 +278,14 @@ components:
           description: "Unique identifier for tracking the error."
 
   examples:
+    SubscriberResponseExample:
+      value:
+        userFrn: "user-12345"
+        email: "user@example.com"
+        notificationTime: "08:30:00"
+        dailyNotifications: true
+        notificationChannel: "EMAIL"
+
     ErrorResponseExample401_TokenMissingOrInvalid:
       value:
         status: 401
@@ -235,3 +294,21 @@ components:
         action: "Provide a valid authentication token"
         timestamp: "2025-03-06T12:10:00Z"
         correlationId: "d4e5f6g7"
+
+    ErrorResponseExample404_UserNotFound:
+      value:
+        status: 404
+        error: "E404001"
+        message: "User not found."
+        action: "Register the user for notifications."
+        timestamp: "2025-03-16T12:00:00Z"
+        correlationId: "xyz789"
+
+    ErrorResponseExample409_UserAlreadyRegistered:
+      value:
+        status: 409
+        error: "E409001"
+        message: "User already registered."
+        action: "No further action required."
+        timestamp: "2025-03-16T12:00:00Z"
+        correlationId: "abc123"
