@@ -1273,9 +1273,6 @@ components:
         dailyNotifications:
           type: boolean
           description: "Indicates whether daily notifications are enabled for the user."
-        gamesPlayed:
-          type: integer
-          description: "Number of games played by the user."
         points:
           type: integer
           description: "Total points earned by the user."
@@ -1474,9 +1471,6 @@ components:
         lastName:
           type: string
           description: "Friend's last name."
-        gamesPlayed:
-          type: integer
-          description: "Number of games played by the friend."
         points:
           type: integer
           description: "Total points earned by the friend."
@@ -1605,7 +1599,6 @@ components:
         createdAt: "2023-05-15T10:30:00Z"
         updatedAt: "2024-03-06T08:45:00Z"
         dailyNotifications: true
-        gamesPlayed: 120
         points: 4500
         streak: 7
 
@@ -1778,7 +1771,6 @@ components:
         username: "johndoe"
         firstName: "John"
         lastName: "Doe"
-        gamesPlayed: "43"
         points: "7890"
         streak: "26"
 
@@ -1789,7 +1781,6 @@ components:
           username: "johndoe"
           firstName: "John"
           lastName: "Doe"
-          gamesPlayed: "43"
           points: "7890"
           streak: "26"
         - userId: "ByCPCfpqTKjgaAADYZFHD1"
@@ -1797,7 +1788,6 @@ components:
           username: "alicesmith"
           firstName: "Alice"
           lastName: "Smith"
-          gamesPlayed: "32"
           points: "3890"
           streak: "12"
 
