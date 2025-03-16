@@ -70,7 +70,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/NotificationSubscriber"
-              example:
+              examples:
                 Subscriber response:
                   $ref: "#/components/examples/SubscriberResponseExample"
         "401":
