@@ -456,6 +456,15 @@ components:
             - FRIEND_INVITE_SENT
             - FRIEND_INVITE_RESPONDED
             - FRIEND_DELETED
+            - NOTIFICATION_SUBSCRIBED
+            - NOTIFICATION_UNSUBSCRIBED
+            - NOTIFICATION_DAILY_ENABLED
+            - NOTIFICATION_DAILY_DISABLED
+            - NOTIFICATION_TIME_UPDATED
+            - NOTIFICATION_ACCOUNT_CONFIRMATION_SENT
+            - NOTIFICATION_FRIEND_INVITE_SENT
+            - NOTIFICATION_FRIEND_INVITE_RESPONDED
+            - NOTIFICATION_GENERAL_EMAIL_SENT
           description: "Type of activity being logged."
 
     LeaderboardEntry:
