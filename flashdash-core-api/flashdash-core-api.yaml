@@ -270,6 +270,36 @@ paths:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
+  /users/notifications:
+    get:
+      tags:
+        - Users
+      summary: Retrieve notifications details for the authenticated user
+      description: |
+        Returns notifications details for the authenticated user.
+      security:
+        - bearerAuth: [ ]
+      operationId: getNotifications
+      responses:
+        "200":
+          description: Notifications disabled successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationSubscriber"
+              examples:
+                Subscriber response:
+                  $ref: "#/components/examples/SubscriberResponseExample"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
   /users/notifications/disable:
     put:
       tags:
@@ -1337,6 +1367,27 @@ components:
           type: string
           description: "New password for the user."
 
+    NotificationSubscriber:
+      type: object
+      properties:
+        userFrn:
+          type: string
+          description: "Unique identifier for the user."
+        email:
+          type: string
+          description: "User's email address for receiving notifications."
+        notificationTime:
+          type: string
+          format: time
+          description: "Time when the user prefers to receive notifications."
+        dailyNotifications:
+          type: boolean
+          description: "Indicates if the user is subscribed to daily notifications."
+        notificationChannel:
+          type: string
+          enum: [ EMAIL ]
+          description: "Notification delivery channel."
+
     DeckRequest:
       type: object
       description: "Request payload for creating a new deck."
@@ -1652,6 +1703,14 @@ components:
       value:
         oldPassword: "OldSecurePass123!"
         newPassword: "NewStrongerPass456!"
+
+    SubscriberResponseExample:
+      value:
+        userFrn: "user-12345"
+        email: "user@example.com"
+        notificationTime: "08:30:00"
+        dailyNotifications: true
+        notificationChannel: "EMAIL"
 
     DeckRequestExample:
       value:
