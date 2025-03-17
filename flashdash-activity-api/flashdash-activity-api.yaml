@@ -131,6 +131,14 @@ paths:
               - FRIEND_INVITE_SENT
               - FRIEND_INVITE_RESPONDED
               - FRIEND_DELETED
+              - NOTIFICATION_SUBSCRIBER_REGISTERED
+              - NOTIFICATION_SUBSCRIBER_UNREGISTERED
+              - EMAIL_ACCOUNT_CONFIRMATION_SENT
+              - EMAIL_FRIEND_INVITE_SENT
+              - EMAIL_FRIEND_INVITE_ACCEPTED
+              - EMAIL_DAILY_NOTIFICATION_ENABLED_SENT
+              - EMAIL_DAILY_NOTIFICATION_SENT
+              - EMAIL_DAILY_NOTIFICATION_DISABLED_SENT
       responses:
         "200":
           description: List of activities of the specified type
