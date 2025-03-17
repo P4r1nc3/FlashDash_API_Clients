@@ -177,7 +177,7 @@ paths:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /notifications/daily/enable:
-    post:
+    put:
       tags:
         - Notifications
       summary: Enable daily notifications
@@ -209,7 +209,7 @@ paths:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
   /notifications/daily/disable:
-    post:
+    put:
       tags:
         - Notifications
       summary: Disable daily notifications
