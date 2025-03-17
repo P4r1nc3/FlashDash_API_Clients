@@ -1044,7 +1044,7 @@ paths:
                 Friend Not Found:
                   $ref: "#/components/examples/ErrorResponseExample404_FriendNotFound"
 
-  /friends/invite:
+  /invitations:
     post:
       tags:
         - Friend Invitations
@@ -1075,7 +1075,7 @@ paths:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
-  /friends/invitations/received:
+  /invitations/received:
     get:
       tags:
         - Friend Invitations
@@ -1108,7 +1108,7 @@ paths:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
-  /friends/invitations/sent:
+  /invitations/sent:
     get:
       tags:
         - Friend Invitations
@@ -1141,7 +1141,7 @@ paths:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
-  /friends/invitations/{invitationId}:
+  /invitations/{invitationId}:
     put:
       tags:
         - Friend Invitations
