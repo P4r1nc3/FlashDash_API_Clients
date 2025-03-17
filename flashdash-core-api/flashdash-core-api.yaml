@@ -247,6 +247,52 @@ paths:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
+  /users/notifications/enable:
+    put:
+      tags:
+        - Users
+      summary: Enable notifications for the authenticated user
+      description: |
+        Enables daily notifications for the authenticated user.
+      security:
+        - bearerAuth: [ ]
+      operationId: enableNotifications
+      responses:
+        "200":
+          description: Notifications enabled successfully
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
+  /users/notifications/disable:
+    put:
+      tags:
+        - Users
+      summary: Disable notifications for the authenticated user
+      description: |
+        Disables daily notifications for the authenticated user.
+      security:
+        - bearerAuth: [ ]
+      operationId: disableNotifications
+      responses:
+        "200":
+          description: Notifications disabled successfully
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
   /decks:
     post:
       tags:
