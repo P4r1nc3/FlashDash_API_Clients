@@ -279,7 +279,15 @@ paths:
         Returns notifications details for the authenticated user.
       security:
         - bearerAuth: [ ]
-      operationId: getNotifications
+      operationId: getNotificationsDetails
+      parameters:
+        - name: notificationTime
+          in: query
+          required: false
+          schema:
+            type: string
+            format: time
+          description: "Optional time for daily notifications (HH:mm format). If not provided, the default time will be used."
       responses:
         "200":
           description: Notifications disabled successfully
