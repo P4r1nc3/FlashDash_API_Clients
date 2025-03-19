@@ -176,6 +176,29 @@ paths:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
+  /notifications/friend-accepted:
+    post:
+      tags:
+        - Notifications
+      summary: Send friend request accepted email
+      description: |
+        Sends an email notification to a user when someone accepts their friend request.
+      security:
+        - bearerAuth: [ ]
+      operationId: sendFriendAcceptedEmail
+      responses:
+        "202":
+          description: Friend acceptance notification email sent
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
   /notifications/daily/enable:
     put:
       tags:
