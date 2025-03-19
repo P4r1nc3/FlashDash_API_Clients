@@ -1032,10 +1032,10 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/FriendResponse"
+                  $ref: "#/components/schemas/UserResponse"
               examples:
                 Friend List Response:
-                  $ref: "#/components/examples/FriendListResponseExample"
+                  $ref: "#/components/examples/UserListResponseExample"
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -1068,10 +1068,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FriendResponse"
+                $ref: "#/components/schemas/UserResponse"
               examples:
                 Friend Response:
-                  $ref: "#/components/examples/FriendResponseExample"
+                  $ref: "#/components/examples/UserResponseExample"
         "401":
           description: Unauthorized - Token Missing or Invalid
           content:
@@ -1325,21 +1325,21 @@ components:
 
     UserResponse:
       type: object
-      description: "Response payload for user details."
+      description: "Response object containing user details."
       properties:
         userId:
           type: string
-          description: "Id of the user."
+          description: "Unique identifier of the user."
         userFrn:
           type: string
-          description: "FRN of the user."
+          description: "FRN (Federated Resource Number) assigned to the user."
         email:
           type: string
           format: email
           description: "User's email address."
         username:
           type: string
-          description: "User's username."
+          description: "User's login username."
         firstName:
           type: string
           description: "User's first name."
@@ -1349,20 +1349,23 @@ components:
         createdAt:
           type: string
           format: date-time
-          description: "Timestamp when the user account was created."
+          description: "Timestamp indicating when the user account was created."
         updatedAt:
           type: string
           format: date-time
-          description: "Timestamp when the user account was last updated."
-        dailyNotifications:
-          type: boolean
-          description: "Indicates whether daily notifications are enabled for the user."
+          description: "Timestamp indicating when the user account was last updated."
+        studyTime:
+          type: integer
+          description: "Total study time recorded for the user (in minutes)."
+        gamesPlayed:
+          type: integer
+          description: "Total number of games played by the user."
         points:
           type: integer
-          description: "Total points earned by the user."
+          description: "Total points accumulated by the user."
         streak:
           type: integer
-          description: "User's current game streak."
+          description: "User's current game streak (consecutive days of activity)."
 
     ChangePasswordRequest:
       type: object
@@ -1557,32 +1560,6 @@ components:
           type: boolean
           description: "Indicates whether the user answered correctly."
 
-    FriendResponse:
-      type: object
-      description: "Response payload for a user's friend."
-      properties:
-        userId:
-          type: string
-          description: "Id of the friend."
-        userFrn:
-          type: string
-          description: "FRN of the friend."
-        username:
-          type: string
-          description: "Friend's username."
-        firstName:
-          type: string
-          description: "Friend's first name."
-        lastName:
-          type: string
-          description: "Friend's last name."
-        points:
-          type: integer
-          description: "Total points earned by the friend."
-        streak:
-          type: integer
-          description: "Friend's current game streak."
-
     FriendInvitationResponseReceived:
       type: object
       description: "Response payload for a received friend invitation."
@@ -1641,6 +1618,9 @@ components:
         userFrn:
           type: string
           description: "FRN of the user."
+        username:
+          type: string
+          description: "User's username."
         firstName:
           type: string
           description: "First name of the user."
@@ -1703,9 +1683,37 @@ components:
         lastName: "Doe"
         createdAt: "2023-05-15T10:30:00Z"
         updatedAt: "2024-03-06T08:45:00Z"
-        dailyNotifications: true
+        studyTime: 123
+        gamesPlayed: 1092
         points: 4500
         streak: 7
+
+    UserListResponseExample:
+      value:
+        - userId: "HOGWNe0tCQurLlbT0CDQXi"
+          userFrn: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
+          email: "user@example.com"
+          username: "flashgamer"
+          firstName: "John"
+          lastName: "Doe"
+          createdAt: "2023-05-15T10:30:00Z"
+          updatedAt: "2024-03-06T08:45:00Z"
+          studyTime: 123
+          gamesPlayed: 1092
+          points: 4500
+          streak: 7
+        - userId: "HOGWNe0tCQurLlbT0CDQXi"
+          userFrn: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
+          email: "user@example.com"
+          username: "flashgamer"
+          firstName: "John"
+          lastName: "Doe"
+          createdAt: "2023-05-15T10:30:00Z"
+          updatedAt: "2024-03-06T08:45:00Z"
+          studyTime: 123
+          gamesPlayed: 1092
+          points: 4500
+          streak: 7
 
     ChangePasswordRequestExample:
       value:
@@ -1876,33 +1884,6 @@ components:
               incorrectAnswers: ["10", "11", "13"]
               userAnswers: ["12"]
               wasCorrect: true
-
-    FriendResponseExample:
-      value:
-        userId: "HOGWNe0tCQurLlbT0CDQXi"
-        userFrn: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
-        username: "johndoe"
-        firstName: "John"
-        lastName: "Doe"
-        points: "7890"
-        streak: "26"
-
-    FriendListResponseExample:
-      value:
-        - userId: "HOGWNe0tCQurLlbT0CDQXi"
-          userFrn: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
-          username: "johndoe"
-          firstName: "John"
-          lastName: "Doe"
-          points: "7890"
-          streak: "26"
-        - userId: "ByCPCfpqTKjgaAADYZFHD1"
-          userFrn: "frn:flashdash:user:ByCPCfpqTKjgaAADYZFHD1"
-          username: "alicesmith"
-          firstName: "Alice"
-          lastName: "Smith"
-          points: "3890"
-          streak: "12"
 
     FriendInvitationResponseReceivedExample:
       value:
