@@ -406,6 +406,18 @@ components:
         achievementFrn:
           type: string
           description: "FRN identifier of the achievement."
+        schemaId:
+          type: string
+          description: "Unique ID of the achievement."
+        schemaFrn:
+          type: string
+          description: "FRN identifier of the achievement."
+        name:
+          type: string
+          description: "Name of the achievement."
+        description:
+          type: string
+          description: "Description of what the achievement represents."
         achievementType:
           type: string
           enum:
@@ -421,12 +433,9 @@ components:
         maxLevel:
           type: integer
           description: "Maximum level of the achievement."
-        requiredCount:
+        threshold:
           type: integer
           description: "The required number of activities to reach this level."
-        description:
-          type: string
-          description: "Description of what the achievement represents."
         achievedAt:
           type: string
           format: date-time
@@ -523,31 +532,40 @@ components:
       value:
         achievementId: "d5e6f7g8"
         achievementFrn: "frn:flashdash:achievement:d5e6f7g8"
+        schemaId: "d5e6f7g8123"
+        schemaFrn: "frn:flashdash:achievement-schema:d5e6f7g8123"
         achievementType: "GAMES_PLAYED"
+        name: "Deck Master"
+        description: "Play a specified number of games."
         level: 2
         maxLevel: 5
-        requiredCount: 50
-        description: "Play a specified number of games."
+        threshold: 50
         achievedAt: "2025-03-09T12:45:00"
 
     AchievementListExample:
       value:
-        - achievementId: "a1b2c3d4"
-          achievementFrn: "frn:flashdash:achievement:a1b2c3d4"
-          achievementType: "STREAK_ACHIEVEMENT"
-          level: 3
+        - achievementId: "d5e6f7g8"
+          achievementFrn: "frn:flashdash:achievement:d5e6f7g8"
+          schemaId: "d5e6f7g8123"
+          schemaFrn: "frn:flashdash:achievement-schema:d5e6f7g8123"
+          achievementType: "GAMES_PLAYED"
+          name: "Deck Master"
+          description: "Play a specified number of games."
+          level: 2
           maxLevel: 5
-          requiredCount: 14
-          description: "Maintain daily activity for a specified number of consecutive days."
-          achievedAt: "2025-03-10T15:00:00"
+          threshold: 50
+          achievedAt: "2025-03-09T12:45:00"
 
         - achievementId: "d5e6f7g8"
           achievementFrn: "frn:flashdash:achievement:d5e6f7g8"
+          schemaId: "d5e6f7g8123"
+          schemaFrn: "frn:flashdash:achievement-schema:d5e6f7g8123"
           achievementType: "GAMES_PLAYED"
+          name: "Deck Master"
+          description: "Play a specified number of games."
           level: 2
           maxLevel: 5
-          requiredCount: 50
-          description: "Play a specified number of games."
+          threshold: 50
           achievedAt: "2025-03-09T12:45:00"
 
     LogActivityRequestExample:
