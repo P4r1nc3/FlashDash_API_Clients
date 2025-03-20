@@ -430,9 +430,6 @@ components:
         level:
           type: integer
           description: "The level of the achievement."
-        maxLevel:
-          type: integer
-          description: "Maximum level of the achievement."
         threshold:
           type: integer
           description: "The required number of activities to reach this level."
@@ -538,7 +535,6 @@ components:
         name: "Deck Master"
         description: "Play a specified number of games."
         level: 2
-        maxLevel: 5
         threshold: 50
         achievedAt: "2025-03-09T12:45:00"
 
@@ -552,7 +548,6 @@ components:
           name: "Deck Master"
           description: "Play a specified number of games."
           level: 2
-          maxLevel: 5
           threshold: 50
           achievedAt: "2025-03-09T12:45:00"
 
@@ -564,7 +559,6 @@ components:
           name: "Deck Master"
           description: "Play a specified number of games."
           level: 2
-          maxLevel: 5
           threshold: 50
           achievedAt: "2025-03-09T12:45:00"
 
