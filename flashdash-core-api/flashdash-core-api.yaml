@@ -1271,6 +1271,66 @@ paths:
                 Friend Not Found:
                   $ref: "#/components/examples/ErrorResponseExample404_InvitationNotFound"
 
+  /leaderboards:
+    get:
+      tags:
+        - Leaderboards
+      summary: Get user leaderboards
+      description: |
+        Retrieves a list of users ranked by the specified criteria.
+        Supports filtering to show only friends and limiting the number of results.
+        Requires authentication.
+      security:
+        - bearerAuth: [ ]
+      operationId: getLeaderboards
+      parameters:
+        - name: criteria
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [ points, streak, studyTime, gamesPlayed ]
+            default: points
+          description: "Criteria used for ranking users (points, streak, study time, or games played)"
+        - name: friendsOnly
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: "When true, returns only the current user's friends"
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+          description: "Maximum number of entries to return (1-100)"
+      responses:
+        "200":
+          description: List of leaderboard entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LeaderboardEntry"
+              examples:
+                Leaderboard Entries:
+                  $ref: "#/components/examples/LeaderboardEntriesExample"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
+
 components:
   securitySchemes:
     bearerAuth:
@@ -1608,6 +1668,20 @@ components:
         recipient:
           $ref: "#/components/schemas/UserSummary"
 
+    LeaderboardEntry:
+      type: object
+      description: "An entry in the leaderboard ranking."
+      properties:
+        rank:
+          type: integer
+          description: "Position in the leaderboard (starting from 1)."
+        userFrn:
+          type: string
+          description: "FRN of the user."
+        score:
+          type: integer
+          description: "Score value based on the ranking criteria (points, current streak, study time in minutes, or games played)."
+
     UserSummary:
       type: object
       description: "Summary details of a user (used in friend invitations)."
@@ -1912,6 +1986,18 @@ components:
             firstName: "Alice"
             lastName: "Smith"
             email: "alicesmith@example.com"
+
+    LeaderboardEntriesExample:
+      value:
+        - rank: 1
+          userFrn: "frn:flashdash:user:ByCPCfpqTKjgaAADYZFHD1"
+          score: 1250
+        - rank: 2
+          userFrn: "frn:flashdash:user:EooNUUfHdRXpYY0m00SbaW"
+          score: 980
+        - rank: 3
+          userFrn: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
+          score: 750
 
     ErrorResponseExample400_AccountAlreadyActivated:
       value:
