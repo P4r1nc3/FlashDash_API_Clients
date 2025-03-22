@@ -268,6 +268,84 @@ paths:
                 Achievement Not Found:
                   $ref: "#/components/examples/ErrorResponseExample404_AchievementNotFoundExample"
 
+  /achievements/schemas:
+    get:
+      tags:
+        - Achievements
+      summary: Get all achievement schemas
+      description: |
+        Retrieves a list of all available achievement schemas.
+      security:
+        - bearerAuth: [ ]
+      operationId: getAllAchievementSchemas
+      responses:
+        "200":
+          description: List of achievement schemas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AchievementSchemaResponse"
+              examples:
+                Achievement Schema List Example:
+                  $ref: "#/components/examples/AchievementSchemaListExample"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
+  /achievements/schemas/{schemaFrn}:
+    get:
+      tags:
+        - Achievements
+      summary: Get details of a specific achievement schema
+      description: |
+        Retrieves detailed information about a specific achievement schema using its unique FRN.
+      security:
+        - bearerAuth: [ ]
+      operationId: getAchievementSchema
+      parameters:
+        - name: schemaFrn
+          in: path
+          required: true
+          schema:
+            type: string
+          description: "The unique FRN of the achievement schema."
+      responses:
+        "200":
+          description: Achievement schema details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AchievementSchemaResponse"
+              examples:
+                Achievement Schema Response Example:
+                  $ref: "#/components/examples/AchievementSchemaResponseExample"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Achievement schema not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Achievement Schema Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_AchievementSchemaNotFoundExample"
+
   /leaderboards:
     get:
       tags:
@@ -438,6 +516,38 @@ components:
           format: date-time
           description: "The timestamp when the achievement was unlocked."
 
+    AchievementSchemaResponse:
+      type: object
+      description: "Represents an achievement schema."
+      properties:
+        schemaId:
+          type: string
+          description: "Unique ID of the achievement."
+        schemaFrn:
+          type: string
+          description: "FRN identifier of the achievement."
+        name:
+          type: string
+          description: "Name of the achievement."
+        description:
+          type: string
+          description: "Description of what the achievement represents."
+        achievementType:
+          type: string
+          enum:
+            - STREAK_ACHIEVEMENT
+            - GAMES_PLAYED
+            - DECKS_CREATED
+            - QUESTIONS_CREATED
+            - FRIENDS_ADDED
+          description: "Type of the achievement."
+        level:
+          type: integer
+          description: "The level of the achievement."
+        threshold:
+          type: integer
+          description: "The required number of activities to reach this level."
+
     LogActivityRequest:
       type: object
       description: "Request payload for logging a new activity."
@@ -538,6 +648,16 @@ components:
         threshold: 50
         achievedAt: "2025-03-09T12:45:00"
 
+    AchievementSchemaResponseExample:
+      value:
+        schemaId: "d5e6f7g8123"
+        schemaFrn: "frn:flashdash:achievement-schema:d5e6f7g8123"
+        achievementType: "GAMES_PLAYED"
+        name: "Deck Master"
+        description: "Play a specified number of games."
+        level: 2
+        threshold: 50
+
     AchievementListExample:
       value:
         - achievementId: "d5e6f7g8"
@@ -561,6 +681,24 @@ components:
           level: 2
           threshold: 50
           achievedAt: "2025-03-09T12:45:00"
+
+    AchievementSchemaListExample:
+      value:
+        - schemaId: "d5e6f7g8123"
+          schemaFrn: "frn:flashdash:achievement-schema:d5e6f7g8123"
+          achievementType: "GAMES_PLAYED"
+          name: "Deck Master"
+          description: "Play a specified number of games."
+          level: 2
+          threshold: 50
+
+        - schemaId: "d5e6f7g8123"
+          schemaFrn: "frn:flashdash:achievement-schema:d5e6f7g8123"
+          achievementType: "GAMES_PLAYED"
+          name: "Deck Master"
+          description: "Play a specified number of games."
+          level: 2
+          threshold: 50
 
     LogActivityRequestExample:
       value:
@@ -603,5 +741,14 @@ components:
         error: "E404001"
         cause: "Achievement not found"
         action: "Ensure the provided achievement FRN is correct"
+        timestamp: "2025-03-10T16:00:00Z"
+        correlationId: "x9y8z7w6"
+
+    ErrorResponseExample404_AchievementSchemaNotFoundExample:
+      value:
+        status: 404
+        error: "E404001"
+        cause: "Achievement schema not found"
+        action: "Ensure the provided achievement schema FRN is correct"
         timestamp: "2025-03-10T16:00:00Z"
         correlationId: "x9y8z7w6"
