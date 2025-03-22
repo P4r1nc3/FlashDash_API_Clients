@@ -30,6 +30,8 @@ tags:
     description: Friend management endpoints
   - name: Friend Invitations
     description: Friend invitation management endpoints
+  - name: Leaderboards
+    description: Endpoints for retrieving user rankings based on different criteria
 
 paths:
   /auth/register:
