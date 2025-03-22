@@ -276,7 +276,7 @@ paths:
       description: |
         Retrieves a list of all available achievement schemas.
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: getAllAchievementSchemas
       responses:
         "200":
@@ -308,7 +308,7 @@ paths:
       description: |
         Retrieves detailed information about a specific achievement schema using its unique FRN.
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: getAchievementSchema
       parameters:
         - name: schemaFrn

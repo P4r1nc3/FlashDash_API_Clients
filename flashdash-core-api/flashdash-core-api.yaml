@@ -255,7 +255,7 @@ paths:
       description: |
         Enables daily notifications for the authenticated user.
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: enableNotifications
       responses:
         "200":
@@ -278,7 +278,7 @@ paths:
       description: |
         Returns notifications details for the authenticated user.
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: getNotificationsDetails
       parameters:
         - name: notificationTime
@@ -316,7 +316,7 @@ paths:
       description: |
         Disables daily notifications for the authenticated user.
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: disableNotifications
       responses:
         "200":
@@ -1281,7 +1281,7 @@ paths:
         Supports filtering to show only friends and limiting the number of results.
         Requires authentication.
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: getLeaderboards
       parameters:
         - name: criteria
@@ -1289,7 +1289,7 @@ paths:
           required: false
           schema:
             type: string
-            enum: [ points, streak, studyTime, gamesPlayed ]
+            enum: [points, streak, studyTime, gamesPlayed]
             default: points
           description: "Criteria used for ranking users (points, streak, study time, or games played)"
         - name: friendsOnly
@@ -1329,7 +1329,6 @@ paths:
               examples:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
-
 
 components:
   securitySchemes:
@@ -1456,7 +1455,7 @@ components:
           description: "Indicates if the user is subscribed to daily notifications."
         notificationChannel:
           type: string
-          enum: [ EMAIL ]
+          enum: [EMAIL]
           description: "Notification delivery channel."
 
     DeckRequest:
@@ -1675,12 +1674,11 @@ components:
         rank:
           type: integer
           description: "Position in the leaderboard (starting from 1)."
-        userFrn:
-          type: string
-          description: "FRN of the user."
         score:
           type: integer
           description: "Score value based on the ranking criteria (points, current streak, study time in minutes, or games played)."
+        user:
+          $ref: "#/components/schemas/UserSummary"
 
     UserSummary:
       type: object
@@ -1990,14 +1988,32 @@ components:
     LeaderboardEntriesExample:
       value:
         - rank: 1
-          userFrn: "frn:flashdash:user:ByCPCfpqTKjgaAADYZFHD1"
           score: 1250
+          user:
+            userId: "ByCPCfpqTKjgaAADYZFHD1"
+            userFrn: "frn:flashdash:user:ByCPCfpqTKjgaAADYZFHD1"
+            username: "johnd"
+            firstName: "John"
+            lastName: "Doe"
+            email: "johndoe@example.com"
         - rank: 2
-          userFrn: "frn:flashdash:user:EooNUUfHdRXpYY0m00SbaW"
           score: 980
+          user:
+            userId: "EooNUUfHdRXpYY0m00SbaW"
+            userFrn: "frn:flashdash:user:EooNUUfHdRXpYY0m00SbaW"
+            username: "janes"
+            firstName: "Jane"
+            lastName: "Smith"
+            email: "janesmith@example.com"
         - rank: 3
-          userFrn: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
           score: 750
+          user:
+            userId: "HOGWNe0tCQurLlbT0CDQXi"
+            userFrn: "frn:flashdash:user:HOGWNe0tCQurLlbT0CDQXi"
+            username: "robertj"
+            firstName: "Robert"
+            lastName: "Johnson"
+            email: "robert.johnson@example.com"
 
     ErrorResponseExample400_AccountAlreadyActivated:
       value:

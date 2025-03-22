@@ -184,7 +184,7 @@ paths:
       description: |
         Sends an email notification to a user when someone accepts their friend request.
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: sendFriendAcceptedEmail
       responses:
         "202":
