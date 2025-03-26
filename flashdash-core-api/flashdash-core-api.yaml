@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: FlashDash API
+  title: FlashDash Core API
   description: |
     FlashDash is an interactive learning application that enhances knowledge retention 
     through quizzes combined with gamification elements. It offers a fun and engaging way 
@@ -808,6 +808,64 @@ paths:
                 Question Not Found:
                   $ref: "#/components/examples/ErrorResponseExample404_QuestionNotFound"
 
+  /decks/{deckId}/questions/generate:
+    post:
+      tags:
+        - Questions
+      summary: Generate questions for a deck
+      description: |
+        Generates a list of questions based on the specified deck.
+        Requires authentication.
+      security:
+        - bearerAuth: []
+      operationId: generateQuestions
+      parameters:
+        - name: deckId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateQuestionsRequest"
+            examples:
+              Generate Question Request:
+                $ref: "#/components/examples/GenerateQuestionsRequestExample"
+      responses:
+        "200":
+          description: List of questions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/QuestionResponse"
+              examples:
+                Question List Response:
+                  $ref: "#/components/examples/QuestionListResponseExample"
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+        "404":
+          description: Not Found - Deck Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Deck Not Found:
+                  $ref: "#/components/examples/ErrorResponseExample404_DeckNotFound"
+
   /decks/{deckId}/gameSessions/start:
     post:
       tags:
@@ -1518,6 +1576,24 @@ components:
           enum: [easy, medium, hard]
           description: "Difficulty level of the question."
 
+    GenerateQuestionsRequest:
+      type: object
+      description: "Request to generate a specified number of questions based on given criteria."
+      properties:
+        count:
+          type: integer
+          description: "Number of questions to generate (must be greater than 0 and less than 10)."
+        language:
+          type: string
+          description: "Language in which the questions and answers should be generated (e.g., english, polish)."
+        difficulty:
+          type: string
+          enum: [easy, medium, hard]
+          description: "Difficulty level of the generated questions."
+        prompt:
+          type: string
+          description: "Topic or subject matter for which the questions should be generated."
+
     QuestionResponse:
       type: object
       description: "Response payload for a question."
@@ -1841,6 +1917,13 @@ components:
           - "Madrid"
           - "Rome"
         difficulty: "medium"
+
+    GenerateQuestionsRequestExample:
+      value:
+        count: 5
+        language: "en"
+        difficulty: "medium"
+        prompt: "Photosynthesis process in plants"
 
     QuestionListRequestExample:
       value:
