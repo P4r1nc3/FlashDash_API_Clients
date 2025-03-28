@@ -1554,6 +1554,11 @@ components:
           format: date-time
           description: "Timestamp when the deck was last updated."
 
+    DifficultyEnum:
+      type: string
+      enum: [easy, medium, hard]
+      description: "Difficulty level of a question."
+
     QuestionRequest:
       type: object
       description: "Request payload for adding a question to a deck."
@@ -1572,9 +1577,7 @@ components:
             type: string
           description: "List of incorrect answers."
         difficulty:
-          type: string
-          enum: [easy, medium, hard]
-          description: "Difficulty level of the question."
+          $ref: "#/components/schemas/DifficultyEnum"
 
     GenerateQuestionsRequest:
       type: object
@@ -1587,9 +1590,7 @@ components:
           type: string
           description: "Language in which the questions and answers should be generated (e.g., english, polish)."
         difficulty:
-          type: string
-          enum: [easy, medium, hard]
-          description: "Difficulty level of the generated questions."
+          $ref: "#/components/schemas/DifficultyEnum"
         prompt:
           type: string
           description: "Topic or subject matter for which the questions should be generated."
@@ -1618,9 +1619,7 @@ components:
             type: string
           description: "List of incorrect answers."
         difficulty:
-          type: string
-          enum: [easy, medium, hard]
-          description: "Difficulty level of the question."
+          $ref: "#/components/schemas/DifficultyEnum"
         createdAt:
           type: string
           format: date-time
