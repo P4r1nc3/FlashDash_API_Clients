@@ -161,7 +161,7 @@ paths:
       description: |
         Sends an email notification to a user when they have unlocked a new achievement.
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       operationId: sendAchievementUnlockedEmail
       responses:
         "202":
