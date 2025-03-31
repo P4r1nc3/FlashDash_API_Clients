@@ -153,6 +153,29 @@ paths:
                 Token Missing or Invalid:
                   $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
 
+  /notifications/achievement-unlocked:
+    post:
+      tags:
+        - Notifications
+      summary: Send info email about unlocking new achievement
+      description: |
+        Sends an email notification to a user when they have unlocked a new achievement.
+      security:
+        - bearerAuth: [ ]
+      operationId: sendAchievementUnlockedEmail
+      responses:
+        "202":
+          description: Achievement unlocked notification email sent
+        "401":
+          description: Unauthorized - Token Missing or Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Token Missing or Invalid:
+                  $ref: "#/components/examples/ErrorResponseExample401_TokenMissingOrInvalid"
+
   /notifications/friend-invite:
     post:
       tags:
