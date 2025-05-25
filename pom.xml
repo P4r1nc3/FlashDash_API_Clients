@@ -13,11 +13,4 @@
     <module>flashdash-activity-api</module>
     <module>flashdash-notification-api</module>
   </modules>
-
-  <distributionManagement>
-    <repository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/P4r1nc3/FlashDash_API_Clients</url>
-    </repository>
-  </distributionManagement>
 </project>
